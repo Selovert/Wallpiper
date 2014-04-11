@@ -7,17 +7,6 @@ def _reset_sys_path():
 _reset_sys_path()
 
 
-def _update_path():
-    import os, sys
-    resources = os.environ['RESOURCEPATH']
-    sys.path.append(os.path.join(
-        resources, 'lib', 'python%d.%d'%(sys.version_info[:2]), 'lib-dynload'))
-    sys.path.append(os.path.join(
-        resources, 'lib', 'python%d.%d'%(sys.version_info[:2])))
-
-_update_path()
-
-
 def _site_packages():
     import site, sys, os
     paths = []
@@ -25,8 +14,12 @@ def _site_packages():
     if sys.exec_prefix != sys.prefix:
         prefixes.append(sys.exec_prefix)
     for prefix in prefixes:
-        paths.append(os.path.join(prefix, 'lib', 'python' + sys.version[:3],
-            'site-packages'))
+	if prefix == sys.prefix:
+	    paths.append(os.path.join("/Library/Python", sys.version[:3], "site-packages"))
+	    paths.append(os.path.join(sys.prefix, "Extras", "lib", "python"))
+	else:
+	    paths.append(os.path.join(prefix, 'lib', 'python' + sys.version[:3],
+		'site-packages'))
     if os.path.join('.framework', '') in os.path.join(sys.prefix, ''):
         home = os.environ.get('HOME')
         if home:
@@ -66,49 +59,26 @@ def _path_inject(paths):
     sys.path[:0] = paths
 
 
-_path_inject(['/Users/tassilo/Projects/pyobjc learning'])
+_path_inject(['/Users/tassilo/Projects/Wallpiper'])
 
-
-import re, sys
-cookie_re = re.compile(b"coding[:=]\s*([-\w.]+)")
-if sys.version_info[0] == 2:
-    default_encoding = 'ascii'
-else:
-    default_encoding = 'utf-8'
-
-def guess_encoding(fp):
-    for i in range(2):
-        ln = fp.readline()
-
-        m = cookie_re.search(ln)
-        if m is not None:
-            return m.group(1).decode('ascii')
-
-    return default_encoding
 
 def _run():
     global __file__
-    import os, site
+    import os, sys, site
     sys.frozen = 'macosx_app'
 
     argv0 = os.path.basename(os.environ['ARGVZERO'])
     script = SCRIPT_MAP.get(argv0, DEFAULT_SCRIPT)
 
     sys.argv[0] = __file__ = script
-    if sys.version_info[0] == 2:
-        with open(script, 'rU') as fp:
-            source = fp.read() + "\n"
-    else:
-        with open(script, 'rb') as fp:
-            encoding = guess_encoding(fp)
-
-        with open(script, 'r', encoding=encoding) as fp:
-            source = fp.read() + '\n'
+    with open(script, 'rU') as fp:
+        source = fp.read() + "\n"
 
     exec(compile(source, script, 'exec'), globals(), globals())
 
 
-DEFAULT_SCRIPT='/Users/tassilo/Projects/pyobjc learning/scriptRunner.py'
+
+DEFAULT_SCRIPT='/Users/tassilo/Projects/Wallpiper/Wallpiper.py'
 SCRIPT_MAP={}
 try:
     _run()

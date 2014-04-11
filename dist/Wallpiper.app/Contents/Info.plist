@@ -5,17 +5,17 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>English</string>
 	<key>CFBundleDisplayName</key>
-	<string>scriptRunner</string>
+	<string>Wallpiper</string>
 	<key>CFBundleExecutable</key>
-	<string>scriptRunner</string>
+	<string>Wallpiper</string>
 	<key>CFBundleIconFile</key>
 	<string>PythonApplet.icns</string>
 	<key>CFBundleIdentifier</key>
-	<string>org.pythonmac.unspecified.scriptRunner</string>
+	<string>org.pythonmac.unspecified.Wallpiper</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>scriptRunner</string>
+	<string>Wallpiper</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
@@ -26,6 +26,8 @@
 	<string>0.0.0</string>
 	<key>LSHasLocalizedDisplayName</key>
 	<false/>
+	<key>LSUIElement</key>
+	<true/>
 	<key>NSAppleScriptEnabled</key>
 	<false/>
 	<key>NSHumanReadableCopyright</key>
@@ -52,11 +54,7 @@
 		<false/>
 		<key>site_packages</key>
 		<false/>
-		<key>use_faulthandler</key>
-		<false/>
 		<key>use_pythonpath</key>
-		<false/>
-		<key>verbose</key>
 		<false/>
 	</dict>
 	<key>PyResourcePackages</key>
@@ -72,7 +70,7 @@
 		<key>PythonExecutable</key>
 		<string>/usr/bin/python</string>
 		<key>PythonLongVersion</key>
-		<string>2.7.5 (default, Aug 25 2013, 00:04:04) 
+		<string>2.7.5 (default, Sep 12 2013, 21:33:34) 
 [GCC 4.2.1 Compatible Apple LLVM 5.0 (clang-500.0.68)]</string>
 		<key>PythonShortVersion</key>
 		<string>2.7</string>
@@ -83,7 +81,7 @@
 			<key>template</key>
 			<string>app</string>
 			<key>version</key>
-			<string>0.8</string>
+			<string>0.7.1</string>
 		</dict>
 	</dict>
 </dict>

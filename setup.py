@@ -7,13 +7,16 @@ Usage:
 
 from setuptools import setup
 
-APP = ['scriptRunner.py']
-DATA_FILES = ['Settings.xib']
+APP = ['Wallpiper.py']
+DATA_FILES = ['Settings.xib',"Resources/oldsize.png"]
+plist=dict(
+        LSUIElement=True,
+    )
 OPTIONS = {}
 
 setup(
     app=APP,
     data_files=DATA_FILES,
-    options={'py2app': OPTIONS},
+    options=dict(py2app=dict(plist=plist)),
     setup_requires=['py2app'],
 )

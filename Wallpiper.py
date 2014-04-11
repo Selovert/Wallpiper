@@ -13,7 +13,7 @@ from PyObjCTools import NibClassBuilder, AppHelper
 #         self.menu = NSMenu.alloc().init()
 
 # poach one of the BTT internal images to get things rolling
-status_images = {'idle':'/Applications/BetterTouchTool.app/Contents/Resources/oldsize.png'}
+status_images = {'idle':'oldsize.png'}
 
 class settingsWindow(NSWindowController):
     pathBox = objc.IBOutlet()
@@ -79,19 +79,16 @@ class Menu(NSObject):
     print settingsWindow.path
   
   def settings_(self, sender):
+        global viewController
+        viewController = settingsWindow.alloc().initWithWindowNibName_("Settings")
         # Show the window
         viewController.showWindow_(viewController)
-     
+        viewController.ReleasedWhenClosed = True;
         # Bring app to top
         NSApp.activateIgnoringOtherApps_(True)
  
 if __name__ == "__main__":
     app = NSApplication.sharedApplication()
-    
-    # Initiate the contrller with a XIB
-    viewController = settingsWindow.alloc().initWithWindowNibName_("Settings")
-    
-    from PyObjCTools import AppHelper
 
     delegate = Menu.alloc().init()
     app.setDelegate_(delegate)
