@@ -1,4 +1,4 @@
-import objc, re, os, time, subprocess, sys, urllib2, switcher
+import objc, threading, re, os, time, subprocess, sys, urllib2, switcher
 from Cocoa import *
 from Foundation import *
 from AppKit import *
@@ -20,6 +20,8 @@ switcher.baseUrl = 'http://interfacelift.com'
 switcher.pageUrl = switcher.baseUrl + '/wallpaper/downloads/random/x/'
 # What browser to emulate
 switcher.userAgent = 'AppleWebKit/537.36'
+# screen resolutions
+switcher.screens = ['2560x1440', '1920x1200']
 
 
 class settingsWindow(NSWindowController):
@@ -91,9 +93,15 @@ class Menu(NSObject):
     self.statusitem.setMenu_(self.menu)
 
   def start_(self, sender):
-    print switcher.savePath
-    print NSScreen.screens()[0].backingScaleFactor
-    print os.getcwd()
+    e = threading.Event()
+    t = threading.Thread(target=switcher.runLoop, args=(e,))
+    t.daemon = True
+    t.start()
+
+    time.sleep(5)
+    e.set()
+    time.sleep(.01)
+    e.clear()
   
   def settings_(self, sender):
     global viewController
