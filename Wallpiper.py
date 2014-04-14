@@ -1,37 +1,66 @@
-import objc, re, os
+import objc, re, os, time, subprocess, sys, urllib2, wallpyper
 from Cocoa import *
 from Foundation import *
 from AppKit import *
 from PyObjCTools import NibClassBuilder, AppHelper
 
-# class Bar(NSObject):
-#     def applicationDidFinishLaunching_(self, notification):
-#         statusbar = NSStatusBar.systemStatusBar()
-#         self.statusitem = statusbar.statusItemWithLength_(NSVariableStatusItemLength)
-#         self.statusitem.setHighlightMode_(1)
-#         self.statusitem.setToolTip_('Da bar')
-#         self.menu = NSMenu.alloc().init()
 
+### Configs ###
 # poach one of the BTT internal images to get things rolling
-status_images = {'idle':'oldsize.png'}
+status_images = {'icon':'wallpiper@2x.png'}
+# number of image files to retain per screen resolution
+archiveImages = 5
+# default rotation interval in minutes (can also be provided as first argument)
+sleepTime = 30
+# Path for saving wallpapers
+savePath = os.path.expanduser("~/Pictures")
+# URL to interfacelift
+baseUrl = 'http://interfacelift.com'
+# URL to random background page
+pageUrl = baseUrl + '/wallpaper/downloads/random/x/'
+
 
 class settingsWindow(NSWindowController):
     pathBox = objc.IBOutlet()
-    path = "placeholder"
+    sleepBox = objc.IBOutlet()
  
     def windowDidLoad(self):
         NSWindowController.windowDidLoad(self)
+        self.updateDisplay()
 
     @objc.IBAction
-    def save_(self, sender):
-        path = self.pathBox.stringValue()
-        print path
+    def open_(self, sender):
+        global savePath
+        savePath = self.openFile()
+        self.updateDisplay()
 
+    @objc.IBAction
+    def apply_(self,sender):
+        global savePath
+        global sleepTime
+        savePath = self.pathBox.stringValue()
+        sleepTime = self.sleepBox.intValue()
+        if sleepTime == 0:
+            sleepTime = 30
+        self.updateDisplay()
+
+    def updateDisplay(self):
+        self.pathBox.setStringValue_(savePath)
+        self.sleepBox.setStringValue_(sleepTime)
+
+    def openFile(self):
+        panel = NSOpenPanel.openPanel()
+        panel.setCanCreateDirectories_(True)
+        panel.setCanChooseDirectories_(True)
+        panel.setCanChooseFiles_(False)
+        #… there are lots of options, you see where this is going…
+        if panel.runModal() == NSOKButton:
+            return panel.directory()
+        return 
 
 class Menu(NSObject):
   images = {}
   statusbar = None
-  state = 'idle'
 
   def applicationDidFinishLaunching_(self, notification):
     statusbar = NSStatusBar.systemStatusBar()
@@ -41,7 +70,7 @@ class Menu(NSObject):
     for i in status_images.keys():
       self.images[i] = NSImage.alloc().initByReferencingFile_(status_images[i])
     # Set initial image
-    self.statusitem.setImage_(self.images['idle'])
+    self.statusitem.setImage_(self.images['icon'])
     # Let it highlight upon clicking
     self.statusitem.setHighlightMode_(1)
     # Set a tooltip
@@ -49,47 +78,35 @@ class Menu(NSObject):
 
     # Build a very simple menu
     self.menu = NSMenu.alloc().init()
-    # Sync event is bound to sync_ method
-    menuitem = NSMenuItem.alloc().initWithTitle_action_keyEquivalent_('Sync...', 'sync:', '')
-    self.menu.addItem_(menuitem)
     # Run a script
-    menuitem = NSMenuItem.alloc().initWithTitle_action_keyEquivalent_('Start', 'start:', '')
-    self.menu.addItem_(menuitem)
+    startItem = NSMenuItem.alloc().initWithTitle_action_keyEquivalent_('Start', 'start:', '')
+    self.menu.addItem_(startItem)
     # Settings menu
-    menuitem = NSMenuItem.alloc().initWithTitle_action_keyEquivalent_('Settings', 'settings:', '')
-    self.menu.addItem_(menuitem)
+    settingsItem = NSMenuItem.alloc().initWithTitle_action_keyEquivalent_('Settings', 'settings:', '')
+    self.menu.addItem_(settingsItem)
     # Default event
-    menuitem = NSMenuItem.alloc().initWithTitle_action_keyEquivalent_('Quit', 'terminate:', '')
-    self.menu.addItem_(menuitem)
+    quitItem = NSMenuItem.alloc().initWithTitle_action_keyEquivalent_('Quit', 'terminate:', '')
+    self.menu.addItem_(quitItem)
     # Bind it to the status item
     self.statusitem.setMenu_(self.menu)
 
-    # Get the timer going
-    # self.timer = NSTimer.alloc().initWithFireDate_interval_target_selector_userInfo_repeats_(start_time, 5.0, self, 'tick:', None, True)
-    # NSRunLoop.currentRunLoop().addTimer_forMode_(self.timer, NSDefaultRunLoopMode)
-    # self.timer.fire()
-
-  def sync_(self, notification):
-    print "sync"
-
-  def tick_(self, notification):
-    print self.state
-
   def start_(self, sender):
-    print settingsWindow.path
+    global savePath
+    print savePath
+    print NSScreen.screens()[0].backingScaleFactor
+    print os.getcwd()
   
   def settings_(self, sender):
-        global viewController
-        viewController = settingsWindow.alloc().initWithWindowNibName_("Settings")
-        # Show the window
-        viewController.showWindow_(viewController)
-        viewController.ReleasedWhenClosed = True;
-        # Bring app to top
-        NSApp.activateIgnoringOtherApps_(True)
+    global viewController
+    viewController = settingsWindow.alloc().initWithWindowNibName_("Settings")
+    # Show the window
+    viewController.showWindow_(viewController)
+    viewController.ReleasedWhenClosed = True;
+    # Bring app to top
+    NSApp.activateIgnoringOtherApps_(True)
  
 if __name__ == "__main__":
     app = NSApplication.sharedApplication()
-
     delegate = Menu.alloc().init()
     app.setDelegate_(delegate)
     AppHelper.runEventLoop()

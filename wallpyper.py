@@ -1,38 +1,9 @@
-# wallpyper version 0.5 for Mac OS
+# wallpyper version 0.5.1 for Mac OS
 # scrapes random images from interfacelift.com
-# author: Greg Berardinelli
+# author: Greg Berardinelli & Tassilo Selover-Stephan (a bit)
 # todo: support multi-monitor images
 
-# wallpaper save directory
-targetDir = '~/Pictures/Wallpapers'
-
-# number of image files to retain per screen resolution
-archiveImages = 5
-
-# default rotation interval in minutes (can also be provided as first argument)
-sleepTime = 30
-
-#####
-
-import urllib2, os, time, subprocess, re, sys, AppKit
-
-try:
-  targetDir = os.path.abspath(os.path.expanduser(targetDir))
-  if not os.path.exists(targetDir): raise
-except:
-  raise Exception('invalid target directory specified')
-  
-try:
-  sleepTime = int(sys.argv[1])
-except:
-  if len(sys.argv) > 1:
-    print '> invalid sleep time specified (expected integer)'
-
-baseUrl = 'http://interfacelift.com'
-pageUrl = baseUrl + '/wallpaper/downloads/random/x/'
-
 def fetchLinks():
-  sprint('> fetching links...')
   for screen in screens:
     resolution = screen['resolution']
     url = pageUrl + resolution + '/'
@@ -42,11 +13,10 @@ def fetchLinks():
     print '> fetched new listing @ %s' %resolution
 
 def fetchImage(link, index, screen):
-  sprint('> fetching image...')
   url = baseUrl + link
   filename = os.path.basename(url)
   filename = os.path.splitext(filename)[0] + '_wpy.jpg'
-  output = os.path.join(targetDir, filename)
+  output = os.path.join(savePath, filename)
   request = httpReq(url)
   with open(output, 'wb') as f:
     while True:
@@ -79,11 +49,11 @@ END"""
   
 def clean():
   images = {}
-  for file in os.listdir(targetDir):
+  for file in os.listdir(savePath):
     match = re.search('_(\d+x\d+)_wpy.jpg', file)
     if match:
       resolution = match.group(1)
-      path = os.path.join(targetDir, file)
+      path = os.path.join(savePath, file)
       try:
         images[resolution].append(path)
       except:
@@ -93,28 +63,12 @@ def clean():
     while len(files) > archiveImages:
       os.remove(files.pop(0))
     
-def sleep(minutes):
-  for i in xrange(minutes, 0, -1):
-    suffix = 's' if i != 1 else ''
-    sprint('> sleeping for %s minute%s' %(i, suffix))
-    time.sleep(60)
-    
 def httpReq(url):
   req = urllib2.Request(url, headers={'User-Agent' : 'AppleWebKit/537.36'}) 
   con = urllib2.urlopen(req)
   return con
 
-def sprint(string):
-  if len(string) > sprint.longest:
-    sprint.longest = len(string)
-  while len(string) < sprint.longest:
-    string = string + ' '
-  sys.stdout.write('\r%s\r' %string)
-  sys.stdout.flush()
-sprint.longest = 0
-
 def main():
-  print '> sleep time: %d minutes' %sleepTime
   while True:
     updateScreens()
     for display, screen in enumerate(screens):
@@ -123,7 +77,7 @@ def main():
       setWallpaper(image, display)
       clean()
     try:
-      sleep(sleepTime)
+      time.sleep(sleepTime*60)
     except KeyboardInterrupt:
       pass
 
@@ -132,4 +86,3 @@ if __name__ == "__main__":
     main()
   except KeyboardInterrupt:
     clean()
-    sprint('')
