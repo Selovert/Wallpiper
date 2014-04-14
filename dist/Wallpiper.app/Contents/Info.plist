@@ -54,7 +54,11 @@
 		<false/>
 		<key>site_packages</key>
 		<false/>
+		<key>use_faulthandler</key>
+		<false/>
 		<key>use_pythonpath</key>
+		<false/>
+		<key>verbose</key>
 		<false/>
 	</dict>
 	<key>PyResourcePackages</key>
@@ -70,7 +74,7 @@
 		<key>PythonExecutable</key>
 		<string>/usr/bin/python</string>
 		<key>PythonLongVersion</key>
-		<string>2.7.5 (default, Sep 12 2013, 21:33:34) 
+		<string>2.7.5 (default, Aug 25 2013, 00:04:04) 
 [GCC 4.2.1 Compatible Apple LLVM 5.0 (clang-500.0.68)]</string>
 		<key>PythonShortVersion</key>
 		<string>2.7</string>
@@ -81,7 +85,7 @@
 			<key>template</key>
 			<string>app</string>
 			<key>version</key>
-			<string>0.7.1</string>
+			<string>0.8</string>
 		</dict>
 	</dict>
 </dict>

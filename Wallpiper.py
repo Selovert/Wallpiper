@@ -1,4 +1,4 @@
-import objc, re, os, time, subprocess, sys, urllib2, wallpyper
+import objc, re, os, time, subprocess, sys, urllib2, switcher
 from Cocoa import *
 from Foundation import *
 from AppKit import *
@@ -7,17 +7,19 @@ from PyObjCTools import NibClassBuilder, AppHelper
 
 ### Configs ###
 # poach one of the BTT internal images to get things rolling
-status_images = {'icon':'wallpiper@2x.png'}
+status_images = {'icon':'wallpiper.png'}
 # number of image files to retain per screen resolution
-archiveImages = 5
+switcher.archiveImages = 5
 # default rotation interval in minutes (can also be provided as first argument)
-sleepTime = 30
+switcher.sleepTime = 30
 # Path for saving wallpapers
-savePath = os.path.expanduser("~/Pictures")
+switcher.savePath = os.path.expanduser("~/Pictures")
 # URL to interfacelift
-baseUrl = 'http://interfacelift.com'
+switcher.baseUrl = 'http://interfacelift.com'
 # URL to random background page
-pageUrl = baseUrl + '/wallpaper/downloads/random/x/'
+switcher.pageUrl = switcher.baseUrl + '/wallpaper/downloads/random/x/'
+# What browser to emulate
+switcher.userAgent = 'AppleWebKit/537.36'
 
 
 class settingsWindow(NSWindowController):
@@ -30,22 +32,20 @@ class settingsWindow(NSWindowController):
 
     @objc.IBAction
     def open_(self, sender):
-        global savePath
-        savePath = self.openFile()
+        switcher.savePath = self.openFile()
         self.updateDisplay()
 
     @objc.IBAction
     def apply_(self,sender):
-        global savePath
         global sleepTime
-        savePath = self.pathBox.stringValue()
+        switcher.savePath = self.pathBox.stringValue()
         sleepTime = self.sleepBox.intValue()
         if sleepTime == 0:
             sleepTime = 30
         self.updateDisplay()
 
     def updateDisplay(self):
-        self.pathBox.setStringValue_(savePath)
+        self.pathBox.setStringValue_(switcher.savePath)
         self.sleepBox.setStringValue_(sleepTime)
 
     def openFile(self):
@@ -91,8 +91,7 @@ class Menu(NSObject):
     self.statusitem.setMenu_(self.menu)
 
   def start_(self, sender):
-    global savePath
-    print savePath
+    print switcher.savePath
     print NSScreen.screens()[0].backingScaleFactor
     print os.getcwd()
   
@@ -104,7 +103,11 @@ class Menu(NSObject):
     viewController.ReleasedWhenClosed = True;
     # Bring app to top
     NSApp.activateIgnoringOtherApps_(True)
- 
+
+    
+
+
+
 if __name__ == "__main__":
     app = NSApplication.sharedApplication()
     delegate = Menu.alloc().init()
