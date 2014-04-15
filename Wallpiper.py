@@ -21,7 +21,7 @@ switcher.pageUrl = switcher.baseUrl + '/wallpaper/downloads/random/x/'
 # What browser to emulate
 switcher.userAgent = 'AppleWebKit/537.36'
 # screen resolutions
-switcher.screens = ['2560x1600']
+switcher.screens = ['2560x1600', '1920x1200']
 
 
 class settingsWindow(NSWindowController):
@@ -95,6 +95,9 @@ class Menu(NSObject):
         # Skip Cycle
         self.skipItem = NSMenuItem.alloc().initWithTitle_action_keyEquivalent_('Get new wallpaper now', 'skip:', '')
         self.menu.addItem_(self.skipItem)
+        #Separator for the functions/settings
+        self.settingsSeparator = NSMenuItem.separatorItem()
+        self.menu.addItem_(self.settingsSeparator)
         # Settings menu
         self.settingsItem = NSMenuItem.alloc().initWithTitle_action_keyEquivalent_('Settings', 'settings:', '')
         self.menu.addItem_(self.settingsItem)
@@ -109,6 +112,7 @@ class Menu(NSObject):
         self.statusitem.setMenu_(self.menu)
 
     def start_(self, sender):
+        print "Starting..."
         global e
         global t
         if switcher.run and threading.activeCount() == 1:
@@ -122,6 +126,7 @@ class Menu(NSObject):
         self.menu.insertItem_atIndex_(self.stopItem, 2)
 
     def stopSwitcher_(self, sender):
+        print "Pausing..."
         switcher.run = False
         self.menu.removeItem_(self.stopItem)
         self.menu.insertItem_atIndex_(self.startItem, 2)
