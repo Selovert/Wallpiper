@@ -48,15 +48,22 @@ def clean():
   while len(images) > archiveImages:
     os.remove(images.pop(0))
  
-def runLoop(e):
+def runLoop(e,self):
+  global run
   print '> sleep time: %d minutes' %sleepTime
   while True:
+    self.infoItem.setTitle_("Fetching links")
     links = fetchLinks()
     while len(links) > 0:
       urls = links.pop()
-      for screen, url in enumerate(urls):
-        screen += 1
-        image = fetchImage(url, len(links), screen);
-        setWallpaper(image, int(screen))
-        clean()
-      e.wait(10)
+      if run:
+        self.infoItem.setTitle_("Fetching wallpaper")
+        for screen, url in enumerate(urls):
+          screen += 1
+          image = fetchImage(url, len(links), screen);
+          setWallpaper(image, int(screen))
+          clean()
+        self.menu.removeItem_(self.infoItem)
+        # self.infoItem.setTitle_("Idle...")
+        self.menu.insertItem_atIndex_(self.infoItem, 0)
+      e.wait(sleepTime*60)

@@ -21,7 +21,7 @@ switcher.pageUrl = switcher.baseUrl + '/wallpaper/downloads/random/x/'
 # What browser to emulate
 switcher.userAgent = 'AppleWebKit/537.36'
 # screen resolutions
-switcher.screens = ['2560x1440', '1920x1200']
+switcher.screens = ['2560x1600']
 
 
 class settingsWindow(NSWindowController):
@@ -39,16 +39,15 @@ class settingsWindow(NSWindowController):
 
     @objc.IBAction
     def apply_(self,sender):
-        global sleepTime
         switcher.savePath = self.pathBox.stringValue()
-        sleepTime = self.sleepBox.intValue()
-        if sleepTime == 0:
-            sleepTime = 30
+        switcher.sleepTime = self.sleepBox.intValue()
+        if switcher.sleepTime == 0:
+            switcher.sleepTime = 30
         self.updateDisplay()
 
     def updateDisplay(self):
         self.pathBox.setStringValue_(switcher.savePath)
-        self.sleepBox.setStringValue_(sleepTime)
+        self.sleepBox.setStringValue_(switcher.sleepTime)
 
     def openFile(self):
         panel = NSOpenPanel.openPanel()
@@ -61,59 +60,92 @@ class settingsWindow(NSWindowController):
         return 
 
 class Menu(NSObject):
-  images = {}
-  statusbar = None
+    images = {}
+    statusbar = None
+    switcher.run = True
 
-  def applicationDidFinishLaunching_(self, notification):
-    statusbar = NSStatusBar.systemStatusBar()
-    # Create the statusbar item
-    self.statusitem = statusbar.statusItemWithLength_(NSVariableStatusItemLength)
-    # Load all images
-    for i in status_images.keys():
-      self.images[i] = NSImage.alloc().initByReferencingFile_(status_images[i])
-    # Set initial image
-    self.statusitem.setImage_(self.images['icon'])
-    # Let it highlight upon clicking
-    self.statusitem.setHighlightMode_(1)
-    # Set a tooltip
-    self.statusitem.setToolTip_('Sync Trigger')
+    def applicationDidFinishLaunching_(self, notification):
+        statusbar = NSStatusBar.systemStatusBar()
+        # Create the statusbar item
+        self.statusitem = statusbar.statusItemWithLength_(NSVariableStatusItemLength)
+        # Load all images
+        for i in status_images.keys():
+          self.images[i] = NSImage.alloc().initByReferencingFile_(status_images[i])
+        # Set initial image
+        self.statusitem.setImage_(self.images['icon'])
+        # Let it highlight upon clicking
+        self.statusitem.setHighlightMode_(1)
+        # Set a tooltip
+        self.statusitem.setToolTip_('Wallpiper')
 
-    # Build a very simple menu
-    self.menu = NSMenu.alloc().init()
-    # Run a script
-    startItem = NSMenuItem.alloc().initWithTitle_action_keyEquivalent_('Start', 'start:', '')
-    self.menu.addItem_(startItem)
-    # Settings menu
-    settingsItem = NSMenuItem.alloc().initWithTitle_action_keyEquivalent_('Settings', 'settings:', '')
-    self.menu.addItem_(settingsItem)
-    # Default event
-    quitItem = NSMenuItem.alloc().initWithTitle_action_keyEquivalent_('Quit', 'terminate:', '')
-    self.menu.addItem_(quitItem)
-    # Bind it to the status item
-    self.statusitem.setMenu_(self.menu)
+        # Build a very simple menu
+        self.menu = NSMenu.alloc().init()
+        #Info bits!
+        self.infoItem = NSMenuItem.alloc().initWithTitle_action_keyEquivalent_('Idle...', '', '')
+        self.infoItem.setEnabled_(False)
+        self.menu.addItem_(self.infoItem)
+        #Separator for the info bits
+        self.infoSeparator = NSMenuItem.separatorItem()
+        self.menu.addItem_(self.infoSeparator)
+        # Start Cylcing
+        self.startItem = NSMenuItem.alloc().initWithTitle_action_keyEquivalent_('Start', 'start:', '')
+        self.menu.addItem_(self.startItem)
+        # Start Cylcing
+        self.stopItem = NSMenuItem.alloc().initWithTitle_action_keyEquivalent_('Pause', 'stopSwitcher:', '')
+        # Skip Cycle
+        self.skipItem = NSMenuItem.alloc().initWithTitle_action_keyEquivalent_('Get new wallpaper now', 'skip:', '')
+        self.menu.addItem_(self.skipItem)
+        # Settings menu
+        self.settingsItem = NSMenuItem.alloc().initWithTitle_action_keyEquivalent_('Settings', 'settings:', '')
+        self.menu.addItem_(self.settingsItem)
 
-  def start_(self, sender):
-    e = threading.Event()
-    t = threading.Thread(target=switcher.runLoop, args=(e,))
-    t.daemon = True
-    t.start()
+        self.debug = NSMenuItem.alloc().initWithTitle_action_keyEquivalent_('Debug', 'debug:', '')
+        self.menu.addItem_(self.debug)
 
-    time.sleep(5)
-    e.set()
-    time.sleep(.01)
-    e.clear()
-  
-  def settings_(self, sender):
-    global viewController
-    viewController = settingsWindow.alloc().initWithWindowNibName_("Settings")
-    # Show the window
-    viewController.showWindow_(viewController)
-    viewController.ReleasedWhenClosed = True;
-    # Bring app to top
-    NSApp.activateIgnoringOtherApps_(True)
+        # Default event
+        self.quitItem = NSMenuItem.alloc().initWithTitle_action_keyEquivalent_('Quit', 'terminate:', '')
+        self.menu.addItem_(self.quitItem)
+        # Bind it to the status item
+        self.statusitem.setMenu_(self.menu)
 
-    
+    def start_(self, sender):
+        global e
+        global t
+        if switcher.run and threading.activeCount() == 1:
+            e = threading.Event()
+            t = threading.Thread(target=switcher.runLoop, args=(e,self))
+            t.daemon = True
+            t.start()
+        else:
+            switcher.run = True
+        self.menu.removeItem_(self.startItem)
+        self.menu.insertItem_atIndex_(self.stopItem, 2)
 
+    def stopSwitcher_(self, sender):
+        switcher.run = False
+        self.menu.removeItem_(self.stopItem)
+        self.menu.insertItem_atIndex_(self.startItem, 2)
+
+
+    def skip_(self, sender):
+        print "Skipping..."
+        global e
+        e.set()
+        time.sleep(.01)
+        e.clear()
+
+
+    def settings_(self, sender):
+        global viewController
+        viewController = settingsWindow.alloc().initWithWindowNibName_("Settings")
+        # Show the window
+        viewController.showWindow_(viewController)
+        viewController.ReleasedWhenClosed = True;
+        # Bring app to top
+        NSApp.activateIgnoringOtherApps_(True)
+
+    def debug_(self, sender):
+        print"AAAAAHHH"
 
 
 if __name__ == "__main__":
