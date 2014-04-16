@@ -1,4 +1,4 @@
-import objc, threading, re, os, time, subprocess, sys, urllib2, switcher
+import objc, threading, re, os, time, subprocess, sys, urllib2, pickle, switcher
 from Cocoa import *
 from Foundation import *
 from AppKit import *
@@ -35,7 +35,7 @@ class settingsWindow(NSWindowController):
     @objc.IBAction
     def open_(self, sender):
         switcher.savePath = self.openFile()
-        self.updateDisplay()
+        self.pathBox.setStringValue_(switcher.savePath)
 
     @objc.IBAction
     def apply_(self,sender):
@@ -44,6 +44,8 @@ class settingsWindow(NSWindowController):
         if switcher.sleepTime == 0:
             switcher.sleepTime = 30
         self.updateDisplay()
+        self.saveSettings()
+        self.close()
 
     def updateDisplay(self):
         self.pathBox.setStringValue_(switcher.savePath)
@@ -58,6 +60,11 @@ class settingsWindow(NSWindowController):
         if panel.runModal() == NSOKButton:
             return panel.directory()
         return 
+
+    def saveSettings(self):
+        settings = {'sleepTime':switcher.sleepTime, 'savePath':switcher.savePath}
+        with open(os.path.expanduser('~/.wallpiper'), 'wb') as f:
+            pickle.dump(settings, f)
 
 class Menu(NSObject):
     images = {}
@@ -152,8 +159,14 @@ class Menu(NSObject):
     def debug_(self, sender):
         print"AAAAAHHH"
 
+def loadSettings():
+    with open(os.path.expanduser('~/.wallpiper'), 'r') as f:
+        settings = pickle.load(f)
+        switcher.sleepTime = settings['sleepTime']
+        switcher.savePath = settings['savePath']
 
 if __name__ == "__main__":
+    loadSettings()
     app = NSApplication.sharedApplication()
     delegate = Menu.alloc().init()
     app.setDelegate_(delegate)
