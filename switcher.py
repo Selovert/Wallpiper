@@ -1,5 +1,4 @@
-import urllib2, os, time, subprocess, re, sys
-
+import objc, urllib2, os, time, subprocess, re, sys
 
 def setWallpaper(filepath, desktop):
   subprocess.call(setWallpaper.ascript %(desktop, os.path.abspath(filepath)), shell=True)
@@ -48,22 +47,17 @@ def clean():
   while len(images) > archiveImages:
     os.remove(images.pop(0))
  
-def runLoop(e,self):
+def runLoop(e):
   global run
   print '> sleep time: %d minutes' %sleepTime
   while True:
-    self.infoItem.setTitle_("Fetching links")
     links = fetchLinks()
     while len(links) > 0:
       urls = links.pop()
       if run:
-        self.infoItem.setTitle_("Fetching wallpaper")
         for screen, url in enumerate(urls):
           screen += 1
           image = fetchImage(url, len(links), screen);
           setWallpaper(image, int(screen))
           clean()
-        self.menu.removeItem_(self.infoItem)
-        # self.infoItem.setTitle_("Idle...")
-        self.menu.insertItem_atIndex_(self.infoItem, 0)
       e.wait(sleepTime*60)

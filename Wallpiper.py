@@ -23,10 +23,11 @@ switcher.pageUrl = switcher.baseUrl + '/wallpaper/downloads/random/x/'
 # What browser to emulate
 switcher.userAgent = 'AppleWebKit/537.36'
 # screen resolutions
-switcher.screens = ['2560x1600']
+switcher.screens = ['2560x1600', '1920x1200']
 
 
 class settingsWindow(NSWindowController):
+    global settingsWindowPool
     pathBox = objc.IBOutlet()
     sleepBox = objc.IBOutlet()
  
@@ -48,12 +49,14 @@ class settingsWindow(NSWindowController):
         self.updateDisplay()
         self.saveSettings()
         self.close()
+        
 
     def updateDisplay(self):
         self.pathBox.setStringValue_(switcher.savePath)
         self.sleepBox.setStringValue_(switcher.sleepTime)
 
     def openFile(self):
+        pool = NSAutoreleasePool.alloc().init()
         panel = NSOpenPanel.openPanel()
         panel.setCanCreateDirectories_(True)
         panel.setCanChooseDirectories_(True)
@@ -62,6 +65,8 @@ class settingsWindow(NSWindowController):
         if panel.runModal() == NSOKButton:
             return panel.directory()
         return 
+        pool.drain()
+        del pool
 
     def saveSettings(self):
         settings = {'sleepTime':switcher.sleepTime, 'savePath':switcher.savePath}
@@ -126,7 +131,7 @@ class Menu(NSObject):
         global t
         if switcher.run and threading.activeCount() == 1:
             e = threading.Event()
-            t = threading.Thread(target=switcher.runLoop, args=(e,self))
+            t = threading.Thread(target=switcher.runLoop, args=(e,))
             t.daemon = True
             t.start()
         else:
