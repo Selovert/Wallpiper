@@ -8,6 +8,8 @@ from PyObjCTools import NibClassBuilder, AppHelper
 ### Configs ###
 # poach one of the BTT internal images to get things rolling
 status_images = {'icon':'wallpiper.png'}
+# Settings file path
+settingsPath = os.path.expanduser('~/.wallpiper')
 # number of image files to retain per screen resolution
 switcher.archiveImages = 5
 # default rotation interval in minutes (can also be provided as first argument)
@@ -21,7 +23,7 @@ switcher.pageUrl = switcher.baseUrl + '/wallpaper/downloads/random/x/'
 # What browser to emulate
 switcher.userAgent = 'AppleWebKit/537.36'
 # screen resolutions
-switcher.screens = ['2560x1600', '1920x1200']
+switcher.screens = ['2560x1600']
 
 
 class settingsWindow(NSWindowController):
@@ -160,13 +162,14 @@ class Menu(NSObject):
         print"AAAAAHHH"
 
 def loadSettings():
-    with open(os.path.expanduser('~/.wallpiper'), 'r') as f:
+    with open(settingsPath, 'r') as f:
         settings = pickle.load(f)
         switcher.sleepTime = settings['sleepTime']
         switcher.savePath = settings['savePath']
 
 if __name__ == "__main__":
-    loadSettings()
+    if os.path.isfile(settingsPath): 
+        loadSettings()
     app = NSApplication.sharedApplication()
     delegate = Menu.alloc().init()
     app.setDelegate_(delegate)
