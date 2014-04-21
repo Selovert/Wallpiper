@@ -49,6 +49,8 @@ def clean():
  
 def runLoop(e):
   global run
+  global screens
+  global links
   print '> sleep time: %d minutes' %sleepTime
   while True:
     links = fetchLinks()

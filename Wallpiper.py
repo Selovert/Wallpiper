@@ -22,14 +22,14 @@ switcher.baseUrl = 'http://interfacelift.com'
 switcher.pageUrl = switcher.baseUrl + '/wallpaper/downloads/random/x/'
 # What browser to emulate
 switcher.userAgent = 'AppleWebKit/537.36'
-# screen resolutions
-switcher.screens = ['2560x1600', '1920x1200']
 
 
 class settingsWindow(NSWindowController):
-    global settingsWindowPool
     pathBox = objc.IBOutlet()
     sleepBox = objc.IBOutlet()
+    screenBox = objc.IBOutlet()
+    screenSelector = objc.IBOutlet()
+    oldIndex = 0
  
     def windowDidLoad(self):
         NSWindowController.windowDidLoad(self)
@@ -46,14 +46,32 @@ class settingsWindow(NSWindowController):
         switcher.sleepTime = self.sleepBox.intValue()
         if switcher.sleepTime == 0:
             switcher.sleepTime = 30
-        self.updateDisplay()
         self.saveSettings()
         self.close()
-        
+
+    @objc.IBAction
+    def autodetectScreens_(self,sender):
+        self.saveSettings()
+        loadScreens()
+        self.updateDisplay()
+
+    @objc.IBAction
+    def updateScreenBox_(self,sender):
+        self.saveSettings()
+        self.updateScreenBox()
+
+    @objc.IBAction
+    def debug_(self,sender):
+        print self.screenSelector.itemArray()
+        for item in self.screenSelector.itemArray():
+            print item.title()
 
     def updateDisplay(self):
+        self.populateScreens()
+        self.updateScreenBox()
         self.pathBox.setStringValue_(switcher.savePath)
         self.sleepBox.setStringValue_(switcher.sleepTime)
+        
 
     def openFile(self):
         pool = NSAutoreleasePool.alloc().init()
@@ -68,10 +86,27 @@ class settingsWindow(NSWindowController):
         pool.drain()
         del pool
 
+    def populateScreens(self):
+        self.screenSelector.removeAllItems()
+        i = 1
+        for screen in switcher.screens:
+            self.screenSelector.addItemWithTitle_(str(i))
+            i = i + 1
+
+    def updateScreenBox(self):
+        index = int(self.screenSelector.selectedItem().title()) - 1
+        if (self.screenBox.stringValue() != '') and (index != self.oldIndex):
+            switcher.screens[self.oldIndex] = self.screenBox.stringValue()
+        self.screenBox.setStringValue_(switcher.screens[index])
+        self.oldIndex = index
+
     def saveSettings(self):
-        settings = {'sleepTime':switcher.sleepTime, 'savePath':switcher.savePath}
+        index = int(self.screenSelector.selectedItem().title()) - 1
+        switcher.screens[index] = self.screenBox.stringValue()
+        settings = {'sleepTime':switcher.sleepTime, 'savePath':switcher.savePath, 'screens':switcher.screens}
         with open(os.path.expanduser('~/.wallpiper'), 'wb') as f:
             pickle.dump(settings, f)
+        switcher.links = []
 
 class Menu(NSObject):
     images = {}
@@ -108,7 +143,6 @@ class Menu(NSObject):
         self.stopItem = NSMenuItem.alloc().initWithTitle_action_keyEquivalent_('Pause', 'stopSwitcher:', '')
         # Skip Cycle
         self.skipItem = NSMenuItem.alloc().initWithTitle_action_keyEquivalent_('Get new wallpaper now', 'skip:', '')
-        self.menu.addItem_(self.skipItem)
         #Separator for the functions/settings
         self.settingsSeparator = NSMenuItem.separatorItem()
         self.menu.addItem_(self.settingsSeparator)
@@ -138,11 +172,13 @@ class Menu(NSObject):
             switcher.run = True
         self.menu.removeItem_(self.startItem)
         self.menu.insertItem_atIndex_(self.stopItem, 2)
+        self.menu.insertItem_atIndex_(self.skipItem, 3)
 
     def stopSwitcher_(self, sender):
         print "Pausing..."
         switcher.run = False
         self.menu.removeItem_(self.stopItem)
+        self.menu.removeItem_(self.skipItem)
         self.menu.insertItem_atIndex_(self.startItem, 2)
 
 
@@ -159,22 +195,38 @@ class Menu(NSObject):
         viewController = settingsWindow.alloc().initWithWindowNibName_("Settings")
         # Show the window
         viewController.showWindow_(viewController)
-        viewController.ReleasedWhenClosed = True;
+        viewController.ReleasedWhenClosed = True
         # Bring app to top
         NSApp.activateIgnoringOtherApps_(True)
 
     def debug_(self, sender):
-        print"AAAAAHHH"
+        print "AAAAAHHH"
 
 def loadSettings():
     with open(settingsPath, 'r') as f:
         settings = pickle.load(f)
+        switcher.screens = settings['screens']
         switcher.sleepTime = settings['sleepTime']
         switcher.savePath = settings['savePath']
+
+def loadScreens():
+    switcher.screens = []
+    x = []; y = []; k = []; i = 0
+    for screen in NSScreen.screens():
+        x.append(int(screen.frame().size.width))
+        y.append(int(screen.frame().size.height))
+        k.append(int(screen._.backingScaleFactor))
+        switcher.screens.append(str(x[i]*k[i]) + 'x' + str(y[i]*k[i]))
+        i = i + 1
+    print switcher.screens
+    # screen resolutions
+    # switcher.screens = ['2560x1600']
 
 if __name__ == "__main__":
     if os.path.isfile(settingsPath): 
         loadSettings()
+    else: 
+        loadScreens()
     app = NSApplication.sharedApplication()
     delegate = Menu.alloc().init()
     app.setDelegate_(delegate)
