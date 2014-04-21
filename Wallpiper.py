@@ -51,14 +51,16 @@ class settingsWindow(NSWindowController):
 
     @objc.IBAction
     def autodetectScreens_(self,sender):
+        self.oldIndex = 0
         self.saveSettings()
         loadScreens()
         self.updateDisplay()
+        print switcher.screens
 
     @objc.IBAction
     def updateScreenBox_(self,sender):
-        self.saveSettings()
         self.updateScreenBox()
+        self.saveSettings()
 
     @objc.IBAction
     def debug_(self,sender):
