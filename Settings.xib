@@ -6,6 +6,7 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="settingsWindow">
             <connections>
+                <outlet property="autoDetectCheckBox" destination="tvf-bS-8ps" id="HZ3-QC-dm7"/>
                 <outlet property="autoLaunchCheckBox" destination="ebB-gO-jlz" id="riB-9f-ST8"/>
                 <outlet property="pathBox" destination="CWR-Kt-ce5" id="flD-Rs-5cd"/>
                 <outlet property="screenBox" destination="AOd-fO-0fe" id="GcT-si-yw4"/>
@@ -19,26 +20,12 @@
         <window title="Wallpiper Settings" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" animationBehavior="default" id="QvC-M9-y7g">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="1901" y="1137" width="356" height="265"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1028"/>
+            <rect key="contentRect" x="1901" y="1137" width="355" height="265"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1418"/>
             <view key="contentView" id="EiT-Mj-1SZ">
-                <rect key="frame" x="0.0" y="0.0" width="356" height="265"/>
+                <rect key="frame" x="0.0" y="0.0" width="355" height="265"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RI8-Yy-0Se">
-                        <rect key="frame" x="260" y="13" width="82" height="32"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Yso-0r-H36">
-                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="system"/>
-                            <string key="keyEquivalent" base64-UTF8="YES">
-Gw
-</string>
-                        </buttonCell>
-                        <connections>
-                            <action selector="performClose:" target="QvC-M9-y7g" id="UiD-pQ-m71"/>
-                        </connections>
-                    </button>
                     <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CWR-Kt-ce5">
                         <rect key="frame" x="20" y="207" width="250" height="22"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -87,7 +74,7 @@ Gw
                         </textFieldCell>
                     </textField>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cFo-UE-DpS">
-                        <rect key="frame" x="182" y="13" width="72" height="32"/>
+                        <rect key="frame" x="269" y="13" width="72" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="push" title="Okay" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="bhY-19-7zg">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -95,17 +82,6 @@ Gw
                         </buttonCell>
                         <connections>
                             <action selector="apply:" target="-2" id="eHu-in-g9w"/>
-                        </connections>
-                    </button>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bf3-Up-xGF">
-                        <rect key="frame" x="14" y="96" width="161" height="32"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="push" title="Autodetect Screens" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="4RL-mR-7w2">
-                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="autodetectScreens:" target="-2" id="sQ6-E6-wgf"/>
                         </connections>
                     </button>
                     <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AOd-fO-0fe">
@@ -122,7 +98,7 @@ Gw
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="WRw-Ha-L5f">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="system"/>
+                            <font key="font" metaFont="menu"/>
                             <menu key="menu" title="OtherViews" id="q5R-OP-MEq"/>
                         </popUpButtonCell>
                         <connections>
@@ -159,7 +135,7 @@ Gw
                         </textFieldCell>
                     </textField>
                     <box autoresizesSubviews="NO" verticalHuggingPriority="750" fixedFrame="YES" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="9PA-kM-Ygq">
-                        <rect key="frame" x="12" y="196" width="324" height="5"/>
+                        <rect key="frame" x="12" y="196" width="331" height="5"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -173,19 +149,30 @@ Gw
                         <font key="titleFont" metaFont="system"/>
                     </box>
                     <box autoresizesSubviews="NO" verticalHuggingPriority="750" fixedFrame="YES" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="Y3N-as-5sm">
-                        <rect key="frame" x="12" y="92" width="323" height="5"/>
+                        <rect key="frame" x="12" y="92" width="331" height="5"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <font key="titleFont" metaFont="system"/>
                     </box>
                     <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ebB-gO-jlz">
-                        <rect key="frame" x="11" y="70" width="266" height="18"/>
+                        <rect key="frame" x="18" y="70" width="266" height="18"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="check" title="Start getting wallpapers on app launch" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="eTS-qJ-SYS">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
+                    </button>
+                    <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tvf-bS-8ps">
+                        <rect key="frame" x="18" y="101" width="213" height="18"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="check" title="Autodetect Screen Resolutions" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="YTd-Nr-MBU">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="autodetectScreens:" target="-2" id="f6B-Yu-aJc"/>
+                        </connections>
                     </button>
                 </subviews>
             </view>
