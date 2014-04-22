@@ -10,6 +10,8 @@ from PyObjCTools import NibClassBuilder, AppHelper
 status_images = {'icon':'wallpiper.png'}
 # Settings file path
 settingsPath = os.path.expanduser('~/.wallpiper')
+# Start getting wallpapers on app launch
+autoLaunch = 0
 # number of image files to retain per screen resolution
 switcher.archiveImages = 5
 # default rotation interval in minutes (can also be provided as first argument)
@@ -29,6 +31,7 @@ class settingsWindow(NSWindowController):
     sleepBox = objc.IBOutlet()
     screenBox = objc.IBOutlet()
     screenSelector = objc.IBOutlet()
+    autoLaunchCheckBox = objc.IBOutlet()
     oldIndex = 0
  
     def windowDidLoad(self):
@@ -42,8 +45,10 @@ class settingsWindow(NSWindowController):
 
     @objc.IBAction
     def apply_(self,sender):
+        global autoLaunch
         switcher.savePath = self.pathBox.stringValue()
         switcher.sleepTime = self.sleepBox.intValue()
+        autoLaunch = self.autoLaunchCheckBox.state()
         if switcher.sleepTime == 0:
             switcher.sleepTime = 30
         self.saveSettings()
@@ -64,15 +69,16 @@ class settingsWindow(NSWindowController):
 
     @objc.IBAction
     def debug_(self,sender):
-        print self.screenSelector.itemArray()
-        for item in self.screenSelector.itemArray():
-            print item.title()
+        if self.autoLaunchCheckBox.state():
+            print self.autoLaunchCheckBox.state()
 
     def updateDisplay(self):
+        global autoLaunch
         self.populateScreens()
         self.updateScreenBox()
         self.pathBox.setStringValue_(switcher.savePath)
         self.sleepBox.setStringValue_(switcher.sleepTime)
+        self.autoLaunchCheckBox.setState_(autoLaunch)
         
 
     def openFile(self):
@@ -103,9 +109,10 @@ class settingsWindow(NSWindowController):
         self.oldIndex = index
 
     def saveSettings(self):
+        global autoLaunch
         index = int(self.screenSelector.selectedItem().title()) - 1
         switcher.screens[index] = self.screenBox.stringValue()
-        settings = {'sleepTime':switcher.sleepTime, 'savePath':switcher.savePath, 'screens':switcher.screens}
+        settings = {'sleepTime':switcher.sleepTime, 'savePath':switcher.savePath, 'screens':switcher.screens, 'autoLaunch':autoLaunch}
         with open(os.path.expanduser('~/.wallpiper'), 'wb') as f:
             pickle.dump(settings, f)
         switcher.links = []
@@ -116,6 +123,7 @@ class Menu(NSObject):
     switcher.run = True
 
     def applicationDidFinishLaunching_(self, notification):
+        global autoLaunch
         statusbar = NSStatusBar.systemStatusBar()
         # Create the statusbar item
         self.statusitem = statusbar.statusItemWithLength_(NSVariableStatusItemLength)
@@ -161,6 +169,9 @@ class Menu(NSObject):
         # Bind it to the status item
         self.statusitem.setMenu_(self.menu)
 
+        if autoLaunch:
+            self.start_('')
+
     def start_(self, sender):
         print "Starting..."
         global e
@@ -205,11 +216,13 @@ class Menu(NSObject):
         print "AAAAAHHH"
 
 def loadSettings():
+    global autoLaunch
     with open(settingsPath, 'r') as f:
         settings = pickle.load(f)
         switcher.screens = settings['screens']
         switcher.sleepTime = settings['sleepTime']
         switcher.savePath = settings['savePath']
+        autoLaunch = settings['autoLaunch']
 
 def loadScreens():
     switcher.screens = []
@@ -220,9 +233,6 @@ def loadScreens():
         k.append(int(screen._.backingScaleFactor))
         switcher.screens.append(str(x[i]*k[i]) + 'x' + str(y[i]*k[i]))
         i = i + 1
-    print switcher.screens
-    # screen resolutions
-    # switcher.screens = ['2560x1600']
 
 if __name__ == "__main__":
     if os.path.isfile(settingsPath): 
