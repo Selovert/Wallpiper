@@ -1,5 +1,14 @@
 import objc, urllib2, os, time, subprocess, re, sys
 
+def http_req(url):
+  try:
+    req = urllib2.Request(url, headers={'User-Agent' : userAgent})
+    con = urllib2.urlopen(req)
+  except:
+    con = None
+  return con
+
+
 def setWallpaper(filepath, desktop):
   subprocess.call(setWallpaper.ascript %(desktop, os.path.abspath(filepath)), shell=True)
 setWallpaper.ascript = """/usr/bin/osascript<<END
@@ -10,8 +19,11 @@ def fetchLinks():
   links = []
   for resolution in screens:
     url = pageUrl + resolution + '/'
-    req = urllib2.Request(url, headers={'User-Agent' : userAgent})
-    con = urllib2.urlopen(req)
+    con = http_req(url)
+    if con is None:
+      print 'Link fetch failed. Sleeping 5...'
+      time.sleep(5)
+      return []
     images = re.findall(r'href=[\'"](/wallpaper?[^\'" >]+.jpg)', con.read())
     for i, link in enumerate(images):
       if len(links) < len(images):
@@ -26,8 +38,10 @@ def fetchImage(link, index, screen):
   filename = os.path.basename(url)
   filename = os.path.splitext(filename)[0] + '_wpy.jpg'
   output = os.path.join(savePath, filename)
-  req = urllib2.Request(url, headers={'User-Agent' : userAgent})
-  con = urllib2.urlopen(req)
+  con = http_req(url)
+  if con is None:
+    print 'Image fetch failed. Popping...'
+    return None
   CHUNK = 16 * 1024
   with open(output, 'wb') as fp:
     while True:
@@ -55,11 +69,12 @@ def runLoop(e):
   while True:
     links = fetchLinks()
     while len(links) > 0:
-      urls = links.pop()
       if run:
+        urls = links.pop()
         for screen, url in enumerate(urls):
           screen += 1
           image = fetchImage(url, len(links), screen);
-          setWallpaper(image, int(screen))
-          clean()
-      e.wait(sleepTime*60)
+          if image:
+            setWallpaper(image, int(screen))
+            clean()
+      if image: e.wait(sleepTime*60)
