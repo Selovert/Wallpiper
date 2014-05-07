@@ -8,7 +8,7 @@ from distutils.version import LooseVersion
 
 ### Configs ###
 # version number
-version = '0.5.1'
+version = '0.5.3'
 shouldUpgrade = False
 # poach one of the BTT internal images to get things rolling
 status_images = {'icon':'wallpiper.png','icon-dl':'wallpiper-dl.png','icon-dc':'wallpiper-dc.png','icon-gray':'wallpiper-gray.png','icon-alert':'wallpiper-alert.png'}
