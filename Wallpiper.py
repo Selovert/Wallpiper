@@ -8,10 +8,10 @@ from distutils.version import LooseVersion
 
 ### Configs ###
 # version number
-version = '0.5.2'
+version = '0.5.1'
 shouldUpgrade = False
 # poach one of the BTT internal images to get things rolling
-status_images = {'icon':'wallpiper.png','icon-dl':'wallpiper-dl.png','icon-dc':'wallpiper-dc.png','icon-gray':'wallpiper-gray.png'}
+status_images = {'icon':'wallpiper.png','icon-dl':'wallpiper-dl.png','icon-dc':'wallpiper-dc.png','icon-gray':'wallpiper-gray.png','icon-alert':'wallpiper-alert.png'}
 # Settings file path
 settingsPath = os.path.expanduser('~/.wallpiper')
 # Start getting wallpapers on app launch
@@ -173,8 +173,9 @@ class Menu(NSObject):
         # Settings menu
         self.settingsItem = NSMenuItem.alloc().initWithTitle_action_keyEquivalent_('Settings', 'settings:', '')
         self.menu.addItem_(self.settingsItem)
+        # App Upgrade
         if shouldUpgrade:
-            # App Upgrade
+            self.changeIcon('icon-alert')
             self.upgradeItem = NSMenuItem.alloc().initWithTitle_action_keyEquivalent_('Upgrade', 'upgrade:', '')
             self.menu.addItem_(self.upgradeItem)
 
@@ -238,20 +239,26 @@ class Menu(NSObject):
         NSApp.activateIgnoringOtherApps_(True)
 
     def upgrade_(self, sender):
-        filePath = os.path.expanduser('~/Downloads/Wallpiper.zip')
-        urllib.urlretrieve ("http://sourceforge.net/projects/wallpiper/files/Wallpiper.zip/download", filePath)
-        os.chdir("../../../")
-        subprocess.call(["rm","-rf","Wallpiper.app"])
-        subprocess.call(["unzip",filePath,"-d","."])
-        subprocess.call(["rm","-rf","__MACOSX"])
-        subprocess.call(["rm","-rf",filePath])
-        os.system("sleep 2 && open Wallpiper.app &")
-        AppHelper.stopEventLoop()
+        self.statusitem.setEnabled_(False)
+        def upgrade(self):
+            filePath = os.path.expanduser('~/Downloads/Wallpiper.zip')
+            urllib.urlretrieve ("http://sourceforge.net/projects/wallpiper/files/Wallpiper.zip/download", filePath)
+            os.chdir("../../../")
+            subprocess.call(["rm","-rf","Wallpiper.app"])
+            subprocess.call(["unzip",filePath,"-d","."])
+            subprocess.call(["rm","-rf","__MACOSX"])
+            subprocess.call(["rm","-rf",filePath])
+            os.system("sleep 2 && open Wallpiper.app &")
+            AppHelper.stopEventLoop()
+        t = threading.Thread(target=upgrade, args=(self,))
+        t.daemon = True
+        t.start()
 
     def changeIcon(self,iconName):
         self.statusitem.setImage_(self.images[iconName])
 
     def debug_(self, sender):
+        time.sleep(3)
         print "AAAAAHHH"
 
 def loadSettings():
