@@ -1,11 +1,15 @@
-import objc, threading, re, os, time, subprocess, sys, urllib, urllib2, pickle, switcher
+import objc, threading, re, os, time, subprocess, sys, urllib, urllib2, pickle, switcher, json
 from Cocoa import *
 from Foundation import *
 from AppKit import *
 from PyObjCTools import NibClassBuilder, AppHelper
+from distutils.version import LooseVersion
 
 
 ### Configs ###
+# version number
+version = '0.5.2'
+shouldUpgrade = False
 # poach one of the BTT internal images to get things rolling
 status_images = {'icon':'wallpiper.png','icon-dl':'wallpiper-dl.png','icon-dc':'wallpiper-dc.png','icon-gray':'wallpiper-gray.png'}
 # Settings file path
@@ -134,6 +138,7 @@ class Menu(NSObject):
 
     def applicationDidFinishLaunching_(self, notification):
         global autoLaunch
+        global shouldUpgrade
         statusbar = NSStatusBar.systemStatusBar()
         # Create the statusbar item
         self.statusitem = statusbar.statusItemWithLength_(NSVariableStatusItemLength)
@@ -146,7 +151,6 @@ class Menu(NSObject):
         self.statusitem.setHighlightMode_(1)
         # Set a tooltip
         self.statusitem.setToolTip_('Wallpiper')
-
         # Build a very simple menu
         self.menu = NSMenu.alloc().init()
         #Info bits!
@@ -169,9 +173,10 @@ class Menu(NSObject):
         # Settings menu
         self.settingsItem = NSMenuItem.alloc().initWithTitle_action_keyEquivalent_('Settings', 'settings:', '')
         self.menu.addItem_(self.settingsItem)
-        # App Upgrade
-        self.upgradeItem = NSMenuItem.alloc().initWithTitle_action_keyEquivalent_('Upgrade', 'upgrade:', '')
-        self.menu.addItem_(self.upgradeItem)
+        if shouldUpgrade:
+            # App Upgrade
+            self.upgradeItem = NSMenuItem.alloc().initWithTitle_action_keyEquivalent_('Upgrade', 'upgrade:', '')
+            self.menu.addItem_(self.upgradeItem)
 
         self.debug = NSMenuItem.alloc().initWithTitle_action_keyEquivalent_('Debug', 'debug:', '')
         self.menu.addItem_(self.debug)
@@ -234,12 +239,12 @@ class Menu(NSObject):
 
     def upgrade_(self, sender):
         filePath = os.path.expanduser('~/Downloads/Wallpiper.zip')
-        urllib.urlretrieve ("https://sourceforge.net/projects/wallpiper/files/latest/download", filePath)
+        urllib.urlretrieve ("http://sourceforge.net/projects/wallpiper/files/Wallpiper.zip/download", filePath)
         os.chdir("../../../")
         subprocess.call(["rm","-rf","Wallpiper.app"])
         subprocess.call(["unzip",filePath,"-d","."])
         subprocess.call(["rm","-rf","__MACOSX"])
-        subprocess.call(["rm","-rf","filePath"])
+        subprocess.call(["rm","-rf",filePath])
         os.system("sleep 2 && open Wallpiper.app &")
         AppHelper.stopEventLoop()
 
@@ -270,11 +275,22 @@ def loadScreens():
         switcher.screens.append(str(x[i]*k[i]) + 'x' + str(y[i]*k[i]))
         i = i + 1
 
+def checkForUpgrade():
+    global version
+    global shouldUpgrade
+    try:
+        siteVersion = json.loads(urllib2.urlopen("https://sourceforge.net/rest/p/wallpiper/").read())['short_description']
+    except:
+        seiteVersion = '0'
+    if LooseVersion(siteVersion) > LooseVersion(version):
+        shouldUpgrade = True
+
 if __name__ == "__main__":
     if os.path.isfile(settingsPath): 
         loadSettings()
     else: 
         loadScreens()
+    checkForUpgrade()
     app = NSApplication.sharedApplication()
     delegate = Menu.alloc().init()
     app.setDelegate_(delegate)
