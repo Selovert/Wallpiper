@@ -15,12 +15,13 @@ setWallpaper.ascript = """/usr/bin/osascript<<END
 tell application "System Events" to set picture of desktop %d to "%s"
 END"""
 
-def fetchLinks():
+def fetchLinks(menu):
   links = []
   for resolution in screens:
     url = pageUrl + resolution + '/'
     con = http_req(url)
     if con is None:
+      menu.changeIcon('icon-dc')
       print 'Link fetch failed. Sleeping 5...'
       time.sleep(5)
       return []
@@ -33,7 +34,7 @@ def fetchLinks():
     print '> fetched new listing @ %s' %resolution
   return links
  
-def fetchImage(link, index, screen):
+def fetchImage(link, index, screen, menu):
   url = baseUrl + link
   filename = os.path.basename(url)
   filename = os.path.splitext(filename)[0] + '_wpy.jpg'
@@ -41,6 +42,7 @@ def fetchImage(link, index, screen):
   con = http_req(url)
   if con is None:
     print 'Image fetch failed. Popping...'
+    menu.changeIcon('icon-dc')
     return None
   CHUNK = 16 * 1024
   with open(output, 'wb') as fp:
@@ -61,20 +63,22 @@ def clean():
   while len(images) > archiveImages:
     os.remove(images.pop(0))
  
-def runLoop(e):
+def runLoop(e,menu):
   global run
   global screens
   global links
   print '> sleep time: %d minutes' %sleepTime
   while True:
-    links = fetchLinks()
+    links = fetchLinks(menu)
     while len(links) > 0:
       if run:
+        menu.changeIcon('icon-dl')
         urls = links.pop()
         for screen, url in enumerate(urls):
           screen += 1
-          image = fetchImage(url, len(links), screen);
+          image = fetchImage(url, len(links), screen, menu);
           if image:
             setWallpaper(image, int(screen))
             clean()
+      menu.changeIcon('icon')
       if image: e.wait(sleepTime*60)

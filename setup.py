@@ -8,7 +8,7 @@ Usage:
 from setuptools import setup
 
 APP = ['Wallpiper.py']
-DATA_FILES = ['Settings.xib','Resources/wallpiper.png','Resources/wallpiper@2x.png']
+DATA_FILES = ['Settings.xib','Resources/wallpiper.png','Resources/wallpiper-dl.png','Resources/wallpiper-dc.png','Resources/wallpiper-gray.png']
 plist=dict(
         LSUIElement=True,
     )

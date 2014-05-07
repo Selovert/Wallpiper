@@ -7,7 +7,7 @@ from PyObjCTools import NibClassBuilder, AppHelper
 
 ### Configs ###
 # poach one of the BTT internal images to get things rolling
-status_images = {'icon':'wallpiper.png'}
+status_images = {'icon':'wallpiper.png','icon-dl':'wallpiper-dl.png','icon-dc':'wallpiper-dc.png','icon-gray':'wallpiper-gray.png'}
 # Settings file path
 settingsPath = os.path.expanduser('~/.wallpiper')
 # Start getting wallpapers on app launch
@@ -139,7 +139,7 @@ class Menu(NSObject):
         for i in status_images.keys():
           self.images[i] = NSImage.alloc().initByReferencingFile_(status_images[i])
         # Set initial image
-        self.statusitem.setImage_(self.images['icon'])
+        self.changeIcon('icon')
         # Let it highlight upon clicking
         self.statusitem.setHighlightMode_(1)
         # Set a tooltip
@@ -184,9 +184,11 @@ class Menu(NSObject):
         print "Starting..."
         global e
         global t
+        restart = False
+        if switcher.run is False: restart = True
         if switcher.run and threading.activeCount() == 1:
             e = threading.Event()
-            t = threading.Thread(target=switcher.runLoop, args=(e,))
+            t = threading.Thread(target=switcher.runLoop, args=(e,self))
             t.daemon = True
             t.start()
         else:
@@ -194,6 +196,10 @@ class Menu(NSObject):
         self.menu.removeItem_(self.startItem)
         self.menu.insertItem_atIndex_(self.stopItem, 2)
         self.menu.insertItem_atIndex_(self.skipItem, 3)
+        if restart:
+            e.set()
+            time.sleep(.01)
+            e.clear()
 
     def stopSwitcher_(self, sender):
         print "Pausing..."
@@ -201,6 +207,7 @@ class Menu(NSObject):
         self.menu.removeItem_(self.stopItem)
         self.menu.removeItem_(self.skipItem)
         self.menu.insertItem_atIndex_(self.startItem, 2)
+        self.changeIcon('icon-gray')
 
 
     def skip_(self, sender):
@@ -219,6 +226,9 @@ class Menu(NSObject):
         viewController.ReleasedWhenClosed = True
         # Bring app to top
         NSApp.activateIgnoringOtherApps_(True)
+
+    def changeIcon(self,iconName):
+        self.statusitem.setImage_(self.images[iconName])
 
     def debug_(self, sender):
         print "AAAAAHHH"
