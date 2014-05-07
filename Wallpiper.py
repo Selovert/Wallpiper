@@ -1,4 +1,4 @@
-import objc, threading, re, os, time, subprocess, sys, urllib2, pickle, switcher
+import objc, threading, re, os, time, subprocess, sys, urllib, urllib2, pickle, switcher
 from Cocoa import *
 from Foundation import *
 from AppKit import *
@@ -14,6 +14,8 @@ settingsPath = os.path.expanduser('~/.wallpiper')
 autoLaunch = 0
 # Auto Detect Screen Resolutions
 autoDetect = 1
+# Link to update from
+updateUrl = "https://sourceforge.net/projects/wallpiper/files/latest/download"
 # number of image files to retain per screen resolution
 switcher.archiveImages = 5
 # default rotation interval in minutes (can also be provided as first argument)
@@ -167,6 +169,9 @@ class Menu(NSObject):
         # Settings menu
         self.settingsItem = NSMenuItem.alloc().initWithTitle_action_keyEquivalent_('Settings', 'settings:', '')
         self.menu.addItem_(self.settingsItem)
+        # App Upgrade
+        self.upgradeItem = NSMenuItem.alloc().initWithTitle_action_keyEquivalent_('Upgrade', 'upgrade:', '')
+        self.menu.addItem_(self.upgradeItem)
 
         self.debug = NSMenuItem.alloc().initWithTitle_action_keyEquivalent_('Debug', 'debug:', '')
         self.menu.addItem_(self.debug)
@@ -226,6 +231,17 @@ class Menu(NSObject):
         viewController.ReleasedWhenClosed = True
         # Bring app to top
         NSApp.activateIgnoringOtherApps_(True)
+
+    def upgrade_(self, sender):
+        filePath = os.path.expanduser('~/Downloads/Wallpiper.zip')
+        urllib.urlretrieve ("https://sourceforge.net/projects/wallpiper/files/latest/download", filePath)
+        os.chdir("../../../")
+        subprocess.call(["rm","-rf","Wallpiper.app"])
+        subprocess.call(["unzip",filePath,"-d","."])
+        subprocess.call(["rm","-rf","__MACOSX"])
+        subprocess.call(["rm","-rf","filePath"])
+        os.system("sleep 2 && open Wallpiper.app &")
+        AppHelper.stopEventLoop()
 
     def changeIcon(self,iconName):
         self.statusitem.setImage_(self.images[iconName])
