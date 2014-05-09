@@ -257,8 +257,21 @@ class Menu(NSObject):
     def changeIcon(self,iconName):
         self.statusitem.setImage_(self.images[iconName])
 
+    def loadScreens(self):
+        loadScreens()
+
+    def checkScreens(self):
+        i = 0
+        if len(NSScreen.screens()) != len(switcher.screens):
+          return True
+        for screen in NSScreen.screens():
+            screenID = switcher.screenNumbers.append(int(screen.deviceDescription()['NSScreenNumber']))
+            if screenID != switcher.screenNumbers[i] and i != 0:
+                return True
+        return False
+
     def debug_(self, sender):
-        time.sleep(3)
+        print switcher.screenNumbers
         print "AAAAAHHH"
 
 def loadSettings():
@@ -274,13 +287,16 @@ def loadSettings():
 
 def loadScreens():
     switcher.screens = []
+    switcher.screenNumbers = []
     x = []; y = []; k = []; i = 0
     for screen in NSScreen.screens():
         x.append(int(screen.frame().size.width))
         y.append(int(screen.frame().size.height))
         k.append(int(screen._.backingScaleFactor))
         switcher.screens.append(str(x[i]*k[i]) + 'x' + str(y[i]*k[i]))
+        switcher.screenNumbers.append(int(screen.deviceDescription()['NSScreenNumber']))
         i = i + 1
+    print switcher.screenNumbers
 
 def checkForUpgrade():
     global version
@@ -295,6 +311,8 @@ def checkForUpgrade():
 if __name__ == "__main__":
     if os.path.isfile(settingsPath): 
         loadSettings()
+        if autoDetect:
+            loadScreens()
     else: 
         loadScreens()
     checkForUpgrade()

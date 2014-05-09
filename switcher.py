@@ -68,10 +68,21 @@ def runLoop(e,menu):
   global screens
   global links
   print '> sleep time: %d minutes' %sleepTime
+  screensChecked = False
   while True:
+    if menu.checkScreens() and (not screensChecked):
+      menu.loadScreens()
+      print "Reloading Screens"
+      screensChecked = True
+      pass
     links = fetchLinks(menu)
     while len(links) > 0:
       if run:
+        if menu.checkScreens() and (not screensChecked):
+          menu.loadScreens()
+          print "Reloading Screens"
+          screensChecked = True
+          break
         menu.changeIcon('icon-dl')
         urls = links.pop()
         for screen, url in enumerate(urls):
@@ -81,4 +92,6 @@ def runLoop(e,menu):
             setWallpaper(image, int(screen))
             clean()
       menu.changeIcon('icon')
-      if image: e.wait(sleepTime*60)
+      if image:
+        screensChecked = False
+        e.wait(sleepTime*60)

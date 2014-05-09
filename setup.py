@@ -13,7 +13,7 @@ plist=dict(
         LSUIElement=True,
     )
 OPTIONS = {
-  'iconfile':'Resources/wallpiper.icns',
+  # 'iconfile':'Resources/wallpiper.icns',
   'plist': plist
 }
 
