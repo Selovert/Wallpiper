@@ -51,6 +51,7 @@ def fetchImage(link, index, screen, menu):
       if not chunk: break
       fp.write(chunk)
   print '> fetched image %s-%d: %s' %(str(index + 1).zfill(2), screen, filename)
+  menu.systemNotification('Wallpiper', 'Downloaded ' + filename)
   return output
  
 def clean():

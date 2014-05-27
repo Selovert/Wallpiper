@@ -10,6 +10,7 @@ from distutils.version import LooseVersion
 # version number
 version = '0.5.3'
 shouldUpgrade = False
+upgradeChecked = False
 # poach one of the BTT internal images to get things rolling
 status_images = {'icon':'wallpiper.png','icon-dl':'wallpiper-dl.png','icon-dc':'wallpiper-dc.png','icon-gray':'wallpiper-gray.png','icon-alert':'wallpiper-alert.png'}
 # Settings file path
@@ -59,7 +60,6 @@ class settingsWindow(NSWindowController):
 
     @objc.IBAction
     def autodetectScreens_(self,sender):
-        global autoDetect
         if self.autoDetectCheckBox.state() == 1: 
             self.oldIndex = 0
             self.saveSettings()
@@ -78,8 +78,6 @@ class settingsWindow(NSWindowController):
             print self.autoLaunchCheckBox.state()
 
     def updateDisplay(self):
-        global autoLaunch
-        global autoDetect
         self.populateScreens()
         self.updateScreenBox()
         self.pathBox.setStringValue_(switcher.savePath)
@@ -137,8 +135,6 @@ class Menu(NSObject):
     switcher.run = True
 
     def applicationDidFinishLaunching_(self, notification):
-        global autoLaunch
-        global shouldUpgrade
         statusbar = NSStatusBar.systemStatusBar()
         # Create the statusbar item
         self.statusitem = statusbar.statusItemWithLength_(NSVariableStatusItemLength)
@@ -264,6 +260,9 @@ class Menu(NSObject):
     def loadScreens(self):
         loadScreens()
 
+    def systemNotification(self, title, message):
+        systemNotification(title, message)
+
     def checkScreens(self):
         i = 0
         if len(NSScreen.screens()) != len(switcher.screens):
@@ -275,10 +274,15 @@ class Menu(NSObject):
         return False
 
     def addUpgradeItem(self):
+        global upgradeChecked
         if shouldUpgrade:
             self.changeIcon('icon-alert')
             self.upgradeItem = NSMenuItem.alloc().initWithTitle_action_keyEquivalent_('Upgrade', 'upgrade:', '')
             self.menu.addItem_(self.upgradeItem)
+            self.menu.removeItem_(self.checkUpgradeItem)
+        elif upgradeChecked:
+            systemNotification('Wallpiper', version + ' is the current version!')
+        upgradeChecked = True
 
     def debug_(self, sender):
         print switcher.screenNumbers
@@ -309,14 +313,22 @@ def loadScreens():
     print switcher.screenNumbers
 
 def checkForUpgrade():
-    global version
     global shouldUpgrade
     try:
         siteVersion = json.loads(urllib2.urlopen("https://sourceforge.net/rest/p/wallpiper/").read())['short_description']
     except:
         siteVersion = '0'
     if LooseVersion(siteVersion) > LooseVersion(version):
+        systemNotification('Wallpiper', 'Update available')
         shouldUpgrade = True
+
+def systemNotification(title, message):
+    notification = NSUserNotification.alloc().init()
+    notification.setTitle_(title)
+    notification.setInformativeText_(message)
+ 
+    center = NSUserNotificationCenter.defaultUserNotificationCenter()
+    center.deliverNotification_(notification)
 
 if __name__ == "__main__":
     if os.path.isfile(settingsPath): 
