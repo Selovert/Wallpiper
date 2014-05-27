@@ -173,11 +173,11 @@ class Menu(NSObject):
         # Settings menu
         self.settingsItem = NSMenuItem.alloc().initWithTitle_action_keyEquivalent_('Settings', 'settings:', '')
         self.menu.addItem_(self.settingsItem)
+        # Check for app upgrade
+        self.checkUpgradeItem = NSMenuItem.alloc().initWithTitle_action_keyEquivalent_('Check for Update', 'checkUpgrade:', '')
+        self.menu.addItem_(self.checkUpgradeItem)
         # App Upgrade
-        if shouldUpgrade:
-            self.changeIcon('icon-alert')
-            self.upgradeItem = NSMenuItem.alloc().initWithTitle_action_keyEquivalent_('Upgrade', 'upgrade:', '')
-            self.menu.addItem_(self.upgradeItem)
+        self.addUpgradeItem()
 
         self.debug = NSMenuItem.alloc().initWithTitle_action_keyEquivalent_('Debug', 'debug:', '')
         self.menu.addItem_(self.debug)
@@ -238,6 +238,10 @@ class Menu(NSObject):
         # Bring app to top
         NSApp.activateIgnoringOtherApps_(True)
 
+    def checkUpgrade_(self, sender):
+        checkForUpgrade()
+        self.addUpgradeItem()
+
     def upgrade_(self, sender):
         self.statusitem.setEnabled_(False)
         def upgrade(self):
@@ -269,6 +273,12 @@ class Menu(NSObject):
             if screenID != switcher.screenNumbers[i] and i != 0:
                 return True
         return False
+
+    def addUpgradeItem(self):
+        if shouldUpgrade:
+            self.changeIcon('icon-alert')
+            self.upgradeItem = NSMenuItem.alloc().initWithTitle_action_keyEquivalent_('Upgrade', 'upgrade:', '')
+            self.menu.addItem_(self.upgradeItem)
 
     def debug_(self, sender):
         print switcher.screenNumbers
@@ -304,7 +314,7 @@ def checkForUpgrade():
     try:
         siteVersion = json.loads(urllib2.urlopen("https://sourceforge.net/rest/p/wallpiper/").read())['short_description']
     except:
-        seiteVersion = '0'
+        siteVersion = '0'
     if LooseVersion(siteVersion) > LooseVersion(version):
         shouldUpgrade = True
 
