@@ -8,7 +8,7 @@ from distutils.version import LooseVersion
 
 ### Configs ###
 # version number
-version = '0.5.3'
+version = '0.5.4'
 shouldUpgrade = False
 upgradeChecked = False
 # poach one of the BTT internal images to get things rolling
