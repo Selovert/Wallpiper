@@ -8,10 +8,10 @@ from distutils.version import LooseVersion
 
 ### Configs ###
 # version number
-version = '0.5.4'
+version = '0.5.3'
 shouldUpgrade = False
 upgradeChecked = False
-# poach one of the BTT internal images to get things rolling
+# All our icons and states of those icons
 status_images = {'icon':'wallpiper.png','icon-dl':'wallpiper-dl.png','icon-dc':'wallpiper-dc.png','icon-gray':'wallpiper-gray.png','icon-alert':'wallpiper-alert.png'}
 # Settings file path
 settingsPath = os.path.expanduser('~/.wallpiper')
@@ -133,6 +133,8 @@ class Menu(NSObject):
     images = {}
     statusbar = None
     switcher.run = True
+    # The current icon (when not loading or otherwise engaged)
+    default_icon = 'icon'
 
     def applicationDidFinishLaunching_(self, notification):
         statusbar = NSStatusBar.systemStatusBar()
@@ -142,7 +144,7 @@ class Menu(NSObject):
         for i in status_images.keys():
           self.images[i] = NSImage.alloc().initByReferencingFile_(status_images[i])
         # Set initial image
-        self.changeIcon('icon')
+        self.changeIcon('icon', True)
         # Let it highlight upon clicking
         self.statusitem.setHighlightMode_(1)
         # Set a tooltip
@@ -254,8 +256,11 @@ class Menu(NSObject):
         t.daemon = True
         t.start()
 
-    def changeIcon(self,iconName):
+    def changeIcon(self,iconName,default = False):
+        global default_icon
         self.statusitem.setImage_(self.images[iconName])
+        if default:
+            self.default_icon = iconName
 
     def loadScreens(self):
         loadScreens()
@@ -276,7 +281,7 @@ class Menu(NSObject):
     def addUpgradeItem(self):
         global upgradeChecked
         if shouldUpgrade:
-            self.changeIcon('icon-alert')
+            self.changeIcon('icon-alert', True)
             self.upgradeItem = NSMenuItem.alloc().initWithTitle_action_keyEquivalent_('Upgrade', 'upgrade:', '')
             self.menu.addItem_(self.upgradeItem)
             self.menu.removeItem_(self.checkUpgradeItem)

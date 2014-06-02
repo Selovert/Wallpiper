@@ -92,7 +92,7 @@ def runLoop(e,menu):
           if image:
             setWallpaper(image, int(screen))
             clean()
-      menu.changeIcon('icon')
+      menu.changeIcon(menu.default_icon)
       if image:
         screensChecked = False
         e.wait(sleepTime*60)

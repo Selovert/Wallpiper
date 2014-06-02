@@ -11,16 +11,18 @@ APP = ['Wallpiper.py']
 DATA_FILES = ['Settings.xib','Resources/wallpiper.png','Resources/wallpiper-dl.png','Resources/wallpiper-dc.png','Resources/wallpiper-gray.png','Resources/wallpiper-alert.png']
 plist=dict(
         LSUIElement=True,
+        CFBundleName='Wallpiper',
+        CFBundleVersion='0.5.5',
+        CFBundleIdentifier='selovert.wallpiper',
+        CFBundleSignature='SBLM',
+        NSHumanReadableCopyright="Don't steal this code, please.",
     )
 OPTIONS = {
-  # 'iconfile':'Resources/wallpiper.icns',
+  'iconfile':'Resources/wallpiper.icns',
   'plist': plist
 }
 
 setup(
-    name='Wallpiper',
-    author='Tassilo Selover-Stephan',
-    version="0.5.3",
     app=APP,
     data_files=DATA_FILES,
     options={'py2app': OPTIONS},
