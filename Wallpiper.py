@@ -8,7 +8,7 @@ from distutils.version import LooseVersion
 
 ### Configs ###
 # version number
-version = '0.5.3'
+version = '0.5.5'
 shouldUpgrade = False
 upgradeChecked = False
 # All our icons and states of those icons

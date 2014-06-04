@@ -18,6 +18,7 @@ END"""
 def fetchLinks(menu):
   links = []
   for resolution in screens:
+    info = []
     url = pageUrl + resolution + '/'
     con = http_req(url)
     if con is None:
@@ -25,7 +26,14 @@ def fetchLinks(menu):
       print 'Link fetch failed. Sleeping 5...'
       time.sleep(5)
       return []
-    images = re.findall(r'href=[\'"](/wallpaper?[^\'" >]+.jpg)', con.read())
+    html = con.read()
+    images = re.findall(r'href=[\'"](/wallpaper?[^\'" >]+.jpg)', html)
+    details = re.findall(r'<div class="details">.+?<div class="display_actions">', html, re.DOTALL)
+    for item in details:
+      title = re.search(r'<a href="/wallpaper/details/.+?\.html">(?!<|Full Info)(.+)?</a>', item).groups()[0]
+      
+      info.append([title])
+    print info[9]
     for i, link in enumerate(images):
       if len(links) < len(images):
         links.append([link])

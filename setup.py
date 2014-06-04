@@ -15,7 +15,7 @@ plist=dict(
         CFBundleVersion='0.5.5',
         CFBundleIdentifier='selovert.wallpiper',
         CFBundleSignature='SBLM',
-        NSHumanReadableCopyright="Don't steal this code, please.",
+        NSHumanReadableCopyright="Don't steal this code, please. ",
         CFBundleGetInfoString='Wallpiper: it downloads wallpapers from somewhere mystical!',
     )
 OPTIONS = {
