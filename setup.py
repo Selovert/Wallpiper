@@ -16,6 +16,7 @@ plist=dict(
         CFBundleIdentifier='selovert.wallpiper',
         CFBundleSignature='SBLM',
         NSHumanReadableCopyright="Don't steal this code, please.",
+        CFBundleGetInfoString='Wallpiper: it downloads wallpapers from somewhere mystical!',
     )
 OPTIONS = {
   'iconfile':'Resources/wallpiper.icns',
