@@ -8,9 +8,23 @@ Usage:
 from setuptools import setup
 
 APP = ['Wallpiper.py']
-DATA_FILES = ['Settings.xib','Resources/wallpiper.png','Resources/wallpiper-dl.png','Resources/wallpiper-dc.png','Resources/wallpiper-gray.png','Resources/wallpiper-alert.png']
+DATA_FILES = [
+  'Settings.xib',
+  'Resources/wallpiper.png',
+  'Resources/wallpiper@2x.png',
+  'Resources/wallpiper-dl.png',
+  'Resources/wallpiper-dl@2x.png',
+  'Resources/wallpiper-dc.png',
+  'Resources/wallpiper-dc@2x.png',
+  'Resources/wallpiper-gray.png',
+  'Resources/wallpiper-gray@2x.png',
+  'Resources/wallpiper-alert.png',
+  'Resources/wallpiper-alert@2x.png'
+]
+
 plist=dict(
         LSUIElement=True,
+        NSUserNotificationAlertStyle='banner',
         CFBundleName='Wallpiper',
         CFBundleVersion='0.5.5',
         CFBundleIdentifier='selovert.wallpiper',

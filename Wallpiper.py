@@ -12,7 +12,7 @@ version = '0.5.5'
 shouldUpgrade = False
 upgradeChecked = False
 # All our icons and states of those icons
-status_images = {'icon':'wallpiper.png','icon-dl':'wallpiper-dl.png','icon-dc':'wallpiper-dc.png','icon-gray':'wallpiper-gray.png','icon-alert':'wallpiper-alert.png'}
+status_images = {'icon':'wallpiper','icon-dl':'wallpiper-dl','icon-dc':'wallpiper-dc','icon-gray':'wallpiper-gray','icon-alert':'wallpiper-alert'}
 # Settings file path
 settingsPath = os.path.expanduser('~/.wallpiper')
 # Start getting wallpapers on app launch
@@ -128,11 +128,37 @@ class settingsWindow(NSWindowController):
         with open(os.path.expanduser('~/.wallpiper'), 'wb') as f:
             pickle.dump(settings, f)
         switcher.links = []
+        switcher.titles = []
+        switcher.detailURLs = []
+
+class SystemNotification(NSObject):
+    def notify(self, title, message, link = 0):
+        notification = NSUserNotification.alloc().init()
+        notification.setTitle_(title)
+        notification.setInformativeText_(message)
+        notification.setUserInfo_({'link':link})
+     
+        center = NSUserNotificationCenter.defaultUserNotificationCenter()
+        center.setDelegate_(self)
+        center.deliverNotification_(notification)
+
+    def userNotificationCenter_shouldPresentNotification_(self, center, notification):
+            return True
+
+    def userNotificationCenter_didActivateNotification_(self, center, notification):
+        info = notification.userInfo()
+        link = info['link']
+        if link:
+            subprocess.Popen(['open', link])
 
 class Menu(NSObject):
+    # global notification
     images = {}
     statusbar = None
+    detailURL = ''
     switcher.run = True
+    # Initialize the notification center object
+    notification = SystemNotification.alloc().init()
     # The current icon (when not loading or otherwise engaged)
     default_icon = 'icon'
 
@@ -142,7 +168,7 @@ class Menu(NSObject):
         self.statusitem = statusbar.statusItemWithLength_(NSVariableStatusItemLength)
         # Load all images
         for i in status_images.keys():
-          self.images[i] = NSImage.alloc().initByReferencingFile_(status_images[i])
+          self.images[i] = NSImage.imageNamed_(status_images[i])
         # Set initial image
         self.changeIcon('icon', True)
         # Let it highlight upon clicking
@@ -151,8 +177,10 @@ class Menu(NSObject):
         self.statusitem.setToolTip_('Wallpiper')
         # Build a very simple menu
         self.menu = NSMenu.alloc().init()
+        # stop items from becoming selectable when they are not
+        self.menu.setAutoenablesItems_(False)
         #Info bits!
-        self.infoItem = NSMenuItem.alloc().initWithTitle_action_keyEquivalent_('Idle...', '', '')
+        self.infoItem = NSMenuItem.alloc().initWithTitle_action_keyEquivalent_('Idle...', 'info:', '')
         self.infoItem.setEnabled_(False)
         self.menu.addItem_(self.infoItem)
         #Separator for the info bits
@@ -186,7 +214,7 @@ class Menu(NSObject):
         # Bind it to the status item
         self.statusitem.setMenu_(self.menu)
 
-        if autoLaunch:
+        if autoLaunch and not shouldUpgrade:
             self.start_('')
 
     def start_(self, sender):
@@ -237,8 +265,18 @@ class Menu(NSObject):
         NSApp.activateIgnoringOtherApps_(True)
 
     def checkUpgrade_(self, sender):
-        checkForUpgrade()
+        self.checkForUpgrade()
         self.addUpgradeItem()
+
+    def checkForUpgrade(self):
+        global shouldUpgrade
+        try:
+            siteVersion = json.loads(urllib2.urlopen("https://sourceforge.net/rest/p/wallpiper/").read())['short_description']
+        except:
+            siteVersion = '0'
+        if LooseVersion(siteVersion) > LooseVersion(version):
+            self.notification.notify('Wallpiper', 'Update available')
+            shouldUpgrade = True
 
     def upgrade_(self, sender):
         self.statusitem.setEnabled_(False)
@@ -256,7 +294,11 @@ class Menu(NSObject):
         t.daemon = True
         t.start()
 
-    def changeIcon(self,iconName,default = False):
+    def info_(self, sender):
+        if self.detailURL is not '':
+            subprocess.Popen(['open', self.detailURL])
+
+    def changeIcon(self, iconName, default = False):
         global default_icon
         self.statusitem.setImage_(self.images[iconName])
         if default:
@@ -264,9 +306,6 @@ class Menu(NSObject):
 
     def loadScreens(self):
         loadScreens()
-
-    def systemNotification(self, title, message):
-        systemNotification(title, message)
 
     def checkScreens(self):
         i = 0
@@ -286,12 +325,13 @@ class Menu(NSObject):
             self.menu.addItem_(self.upgradeItem)
             self.menu.removeItem_(self.checkUpgradeItem)
         elif upgradeChecked:
-            systemNotification('Wallpiper', version + ' is the current version!')
+            self.notification.notify('Wallpiper', version + ' is the current version!')
         upgradeChecked = True
 
     def debug_(self, sender):
-        print switcher.screenNumbers
         print "AAAAAHHH"
+        self.notification.notify('Wallpiper', 'Update available', 'http://www.google.com')
+        pass
 
 def loadSettings():
     global autoLaunch
@@ -317,24 +357,6 @@ def loadScreens():
         i = i + 1
     print switcher.screenNumbers
 
-def checkForUpgrade():
-    global shouldUpgrade
-    try:
-        siteVersion = json.loads(urllib2.urlopen("https://sourceforge.net/rest/p/wallpiper/").read())['short_description']
-    except:
-        siteVersion = '0'
-    if LooseVersion(siteVersion) > LooseVersion(version):
-        systemNotification('Wallpiper', 'Update available')
-        shouldUpgrade = True
-
-def systemNotification(title, message):
-    notification = NSUserNotification.alloc().init()
-    notification.setTitle_(title)
-    notification.setInformativeText_(message)
- 
-    center = NSUserNotificationCenter.defaultUserNotificationCenter()
-    center.deliverNotification_(notification)
-
 if __name__ == "__main__":
     if os.path.isfile(settingsPath): 
         loadSettings()
@@ -342,9 +364,9 @@ if __name__ == "__main__":
             loadScreens()
     else: 
         loadScreens()
-    checkForUpgrade()
     app = NSApplication.sharedApplication()
     delegate = Menu.alloc().init()
+    delegate.checkForUpgrade()
     app.setDelegate_(delegate)
     AppHelper.runEventLoop()
 

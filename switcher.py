@@ -17,30 +17,37 @@ END"""
 
 def fetchLinks(menu):
   links = []
+  titles = []
+  detailURLs = []
   for resolution in screens:
-    info = []
     url = pageUrl + resolution + '/'
     con = http_req(url)
     if con is None:
       menu.changeIcon('icon-dc')
       print 'Link fetch failed. Sleeping 5...'
       time.sleep(5)
-      return []
+      return [[],[],[]]
     html = con.read()
     images = re.findall(r'href=[\'"](/wallpaper?[^\'" >]+.jpg)', html)
     details = re.findall(r'<div class="details">.+?<div class="display_actions">', html, re.DOTALL)
-    for item in details:
-      title = re.search(r'<a href="/wallpaper/details/.+?\.html">(?!<|Full Info)(.+)?</a>', item).groups()[0]
-      
-      info.append([title])
-    print info[9]
+    for i, item in enumerate(details):
+      rawInfo = re.search(r'<a href="(/wallpaper/details/.+?\.html)">(?!<|Full Info)(.+)?</a>', item).groups()
+      title = rawInfo[1]
+      detailURL = 'http://interfacelift.com/' + rawInfo[0]
+      if len(titles) < len(details):
+        titles.append([title])
+        detailURLs.append([detailURL])
+      else:
+        titles[i].append(title)
+        detailURLs[i].append(detailURL)
+
     for i, link in enumerate(images):
       if len(links) < len(images):
         links.append([link])
       else:
         links[i].append(link)
     print '> fetched new listing @ %s' %resolution
-  return links
+  return [links, titles, detailURLs]
  
 def fetchImage(link, index, screen, menu):
   url = baseUrl + link
@@ -59,7 +66,6 @@ def fetchImage(link, index, screen, menu):
       if not chunk: break
       fp.write(chunk)
   print '> fetched image %s-%d: %s' %(str(index + 1).zfill(2), screen, filename)
-  menu.systemNotification('Wallpiper', 'Downloaded ' + filename)
   return output
  
 def clean():
@@ -84,7 +90,7 @@ def runLoop(e,menu):
       print "Reloading Screens"
       screensChecked = True
       pass
-    links = fetchLinks(menu)
+    [links, titles, detailURLs] = fetchLinks(menu)
     while len(links) > 0:
       if run:
         if menu.checkScreens() and (not screensChecked):
@@ -94,11 +100,20 @@ def runLoop(e,menu):
           break
         menu.changeIcon('icon-dl')
         urls = links.pop()
+        imageTitles = titles.pop()
+        imageDetailURLs = detailURLs.pop()
+
         for screen, url in enumerate(urls):
+          title = imageTitles[screen]
+          detailURL = imageDetailURLs[screen]
           screen += 1
           image = fetchImage(url, len(links), screen, menu);
           if image:
             setWallpaper(image, int(screen))
+            menu.notification.notify('Wallpiper: new wallpaper', title, detailURL)
+            menu.infoItem.setEnabled_(True)
+            menu.infoItem.setTitle_(title)
+            menu.detailURL = detailURL
             clean()
       menu.changeIcon(menu.default_icon)
       if image:
