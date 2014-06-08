@@ -26,10 +26,10 @@ plist=dict(
         LSUIElement=True,
         NSUserNotificationAlertStyle='banner',
         CFBundleName='Wallpiper',
-        CFBundleVersion='0.5.5',
+        CFBundleVersion='0.5.6',
         CFBundleIdentifier='selovert.wallpiper',
         CFBundleSignature='SBLM',
-        NSHumanReadableCopyright="Don't steal this code, please. ",
+        NSHumanReadableCopyright="Don't steal this code, please.",
         CFBundleGetInfoString='Wallpiper: it downloads wallpapers from somewhere mystical!',
     )
 OPTIONS = {

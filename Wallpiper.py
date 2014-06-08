@@ -8,7 +8,7 @@ from distutils.version import LooseVersion
 
 ### Configs ###
 # version number
-version = '0.5.5'
+version = '0.5.6'
 shouldUpgrade = False
 upgradeChecked = False
 # All our icons and states of those icons
@@ -22,7 +22,7 @@ autoDetect = 1
 # Link to update from
 updateUrl = "https://sourceforge.net/projects/wallpiper/files/latest/download"
 # number of image files to retain per screen resolution
-switcher.archiveImages = 5
+switcher.archiveImages = 10
 # default rotation interval in minutes (can also be provided as first argument)
 switcher.sleepTime = 30
 # Path for saving wallpapers
@@ -33,6 +33,8 @@ switcher.baseUrl = 'http://interfacelift.com'
 switcher.pageUrl = switcher.baseUrl + '/wallpaper/downloads/random/x/'
 # What browser to emulate
 switcher.userAgent = 'AppleWebKit/537.36'
+# development mode
+devMode = False
 
 
 class settingsWindow(NSWindowController):
@@ -40,6 +42,7 @@ class settingsWindow(NSWindowController):
     sleepBox = objc.IBOutlet()
     screenBox = objc.IBOutlet()
     screenSelector = objc.IBOutlet()
+    archiveImagesBox = objc.IBOutlet()
     autoLaunchCheckBox = objc.IBOutlet()
     autoDetectCheckBox = objc.IBOutlet()
     oldIndex = 0
@@ -82,6 +85,7 @@ class settingsWindow(NSWindowController):
         self.updateScreenBox()
         self.pathBox.setStringValue_(switcher.savePath)
         self.sleepBox.setStringValue_(switcher.sleepTime)
+        self.archiveImagesBox.setStringValue_(switcher.archiveImages)
         self.autoLaunchCheckBox.setState_(autoLaunch)
         self.autoDetectCheckBox.setState_(autoDetect)
         
@@ -118,13 +122,14 @@ class settingsWindow(NSWindowController):
         global autoDetect
         switcher.savePath = self.pathBox.stringValue()
         switcher.sleepTime = self.sleepBox.intValue()
+        switcher.archiveImages = self.archiveImagesBox.intValue()
         autoLaunch = self.autoLaunchCheckBox.state()
         autoDetect = self.autoDetectCheckBox.state()
         if switcher.sleepTime == 0:
             switcher.sleepTime = 30
         index = int(self.screenSelector.selectedItem().title()) - 1
         switcher.screens[index] = self.screenBox.stringValue()
-        settings = {'sleepTime':switcher.sleepTime, 'savePath':switcher.savePath, 'screens':switcher.screens, 'autoLaunch':autoLaunch, 'autoDetect':autoDetect}
+        settings = {'sleepTime':switcher.sleepTime, 'savePath':switcher.savePath, 'screens':switcher.screens, 'autoLaunch':autoLaunch, 'autoDetect':autoDetect, 'archiveImages':switcher.archiveImages}
         with open(os.path.expanduser('~/.wallpiper'), 'wb') as f:
             pickle.dump(settings, f)
         switcher.links = []
@@ -177,6 +182,7 @@ class Menu(NSObject):
         self.statusitem.setToolTip_('Wallpiper')
         # Build a very simple menu
         self.menu = NSMenu.alloc().init()
+        self.menu.setDelegate_(self)
         # stop items from becoming selectable when they are not
         self.menu.setAutoenablesItems_(False)
         #Info bits!
@@ -205,8 +211,9 @@ class Menu(NSObject):
         # App Upgrade
         self.addUpgradeItem()
 
-        self.debug = NSMenuItem.alloc().initWithTitle_action_keyEquivalent_('Debug', 'debug:', '')
-        self.menu.addItem_(self.debug)
+        if devMode:
+            self.debug = NSMenuItem.alloc().initWithTitle_action_keyEquivalent_('Debug', 'debug:', '')
+            self.menu.addItem_(self.debug)
 
         # Default event
         self.quitItem = NSMenuItem.alloc().initWithTitle_action_keyEquivalent_('Quit', 'terminate:', '')
@@ -341,6 +348,7 @@ def loadSettings():
         switcher.screens = settings['screens']
         switcher.sleepTime = settings['sleepTime']
         switcher.savePath = settings['savePath']
+        switcher.archiveImages = settings['archiveImages']
         autoLaunch = settings['autoLaunch']
         autoDetect = settings['autoDetect']
 
