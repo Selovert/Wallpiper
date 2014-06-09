@@ -34,7 +34,7 @@ switcher.pageUrl = switcher.baseUrl + '/wallpaper/downloads/random/x/'
 # What browser to emulate
 switcher.userAgent = 'AppleWebKit/537.36'
 # development mode
-devMode = False
+devMode = True
 
 
 class settingsWindow(NSWindowController):
@@ -337,7 +337,7 @@ class Menu(NSObject):
 
     def debug_(self, sender):
         print "AAAAAHHH"
-        self.notification.notify('Wallpiper', 'Update available', 'http://www.google.com')
+        self.changeIcon('pipe')
         pass
 
 def loadSettings():

@@ -19,7 +19,8 @@ DATA_FILES = [
   'Resources/wallpiper-gray.png',
   'Resources/wallpiper-gray@2x.png',
   'Resources/wallpiper-alert.png',
-  'Resources/wallpiper-alert@2x.png'
+  'Resources/wallpiper-alert@2x.png',
+  'Resources/pipe.png'
 ]
 
 plist=dict(
