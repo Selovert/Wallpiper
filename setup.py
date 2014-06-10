@@ -6,6 +6,7 @@ Usage:
 """
 
 from setuptools import setup
+from os import listdir
 
 APP = ['Wallpiper.py']
 DATA_FILES = [
@@ -20,8 +21,9 @@ DATA_FILES = [
   'Resources/wallpiper-gray@2x.png',
   'Resources/wallpiper-alert.png',
   'Resources/wallpiper-alert@2x.png',
-  'Resources/pipe.png'
 ]
+for image in listdir('Resources/pipe'):
+  DATA_FILES.append('Resources/pipe/' + image)
 
 plist=dict(
         LSUIElement=True,
