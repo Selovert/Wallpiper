@@ -4,6 +4,7 @@ from Foundation import *
 from AppKit import *
 from PyObjCTools import NibClassBuilder, AppHelper
 from distutils.version import LooseVersion
+from glob import glob
 
 
 ### Configs ###
@@ -337,7 +338,7 @@ class Menu(NSObject):
 
     def debug_(self, sender):
         print "AAAAAHHH"
-        self.changeIcon('pipe')
+        print glob('./pipe-*')
         pass
 
 def loadSettings():
