@@ -22,8 +22,6 @@ DATA_FILES = [
   'Resources/wallpiper-alert.png',
   'Resources/wallpiper-alert@2x.png',
 ]
-for image in listdir('Resources/pipe'):
-  DATA_FILES.append('Resources/pipe/' + image)
 
 plist=dict(
         LSUIElement=True,
