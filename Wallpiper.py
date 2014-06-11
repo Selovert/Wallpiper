@@ -13,7 +13,7 @@ version = '0.5.6'
 shouldUpgrade = False
 upgradeChecked = False
 # All our icons and states of those icons
-status_images = {'icon':'wallpiper','icon-dl':'wallpiper-dl','icon-dc':'wallpiper-dc','icon-gray':'wallpiper-gray','icon-alert':'wallpiper-alert'}
+status_images = {'icon':'wallpiper','icon-dl':'wallpiper-dl','icon-dc':'wallpiper-dc','icon-gray':'wallpiper-gray','icon-alert':'wallpiper-alert','pipe':'pipe.png'}
 # Settings file path
 settingsPath = os.path.expanduser('~/.wallpiper')
 # Start getting wallpapers on app launch
@@ -160,6 +160,7 @@ class SystemNotification(NSObject):
 class Menu(NSObject):
     # global notification
     images = {}
+    frames = []
     statusbar = None
     detailURL = ''
     switcher.run = True
@@ -175,8 +176,12 @@ class Menu(NSObject):
         # Load all images
         for i in status_images.keys():
           self.images[i] = NSImage.imageNamed_(status_images[i])
+        # Load animation files
+        for frame in glob('pipe-*'):
+          self.frames.append(NSImage.imageNamed_(frame))
         # Set initial image
         self.changeIcon('icon', True)
+        # self.changeIcon('icon', True)
         # Let it highlight upon clicking
         self.statusitem.setHighlightMode_(1)
         # Set a tooltip
@@ -338,8 +343,18 @@ class Menu(NSObject):
 
     def debug_(self, sender):
         print "AAAAAHHH"
-        print glob('./pipe-*')
+        self.changeIcon('pipes')
+        # t = threading.Thread(target=animate, args=(self.statusitem,self.frames, self.images))
+        # t.daemon = True
+        # t.start()
         pass
+
+def animate(statusitem, frames, images):
+    for frame in frames:
+        statusitem.setImage_(frame)
+        time.sleep(0.05)
+    statusitem.setImage_(images['pipe'])
+
 
 def loadSettings():
     global autoLaunch
