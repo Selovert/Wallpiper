@@ -1,0 +1,422 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		470DA9E519F456ED003EBC2A /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470DA9E419F456ED003EBC2A /* Globals.swift */; };
+		470DA9E719F463D2003EBC2A /* TimerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470DA9E619F463D2003EBC2A /* TimerController.swift */; };
+		470DA9E919F46AF2003EBC2A /* DownloadController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470DA9E819F46AF2003EBC2A /* DownloadController.swift */; };
+		47B8B94819F42A0800594D6B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B8B94719F42A0800594D6B /* AppDelegate.swift */; };
+		47B8B94A19F42A0800594D6B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 47B8B94919F42A0800594D6B /* Images.xcassets */; };
+		47B8B94D19F42A0800594D6B /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47B8B94B19F42A0800594D6B /* MainMenu.xib */; };
+		47B8B95919F42A0800594D6B /* WallpiperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B8B95819F42A0800594D6B /* WallpiperTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		47B8B95319F42A0800594D6B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 47B8B93A19F42A0800594D6B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 47B8B94119F42A0800594D6B;
+			remoteInfo = Wallpiper;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		470DA9E419F456ED003EBC2A /* Globals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Globals.swift; sourceTree = "<group>"; };
+		470DA9E619F463D2003EBC2A /* TimerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimerController.swift; sourceTree = "<group>"; };
+		470DA9E819F46AF2003EBC2A /* DownloadController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadController.swift; sourceTree = "<group>"; };
+		47B8B94219F42A0800594D6B /* Wallpiper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Wallpiper.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		47B8B94619F42A0800594D6B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		47B8B94719F42A0800594D6B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		47B8B94919F42A0800594D6B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		47B8B94C19F42A0800594D6B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		47B8B95219F42A0800594D6B /* WallpiperTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WallpiperTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		47B8B95719F42A0800594D6B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		47B8B95819F42A0800594D6B /* WallpiperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WallpiperTests.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		47B8B93F19F42A0800594D6B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		47B8B94F19F42A0800594D6B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		47B8B93919F42A0800594D6B = {
+			isa = PBXGroup;
+			children = (
+				47B8B94419F42A0800594D6B /* Wallpiper */,
+				47B8B95519F42A0800594D6B /* WallpiperTests */,
+				47B8B94319F42A0800594D6B /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		47B8B94319F42A0800594D6B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				47B8B94219F42A0800594D6B /* Wallpiper.app */,
+				47B8B95219F42A0800594D6B /* WallpiperTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		47B8B94419F42A0800594D6B /* Wallpiper */ = {
+			isa = PBXGroup;
+			children = (
+				47B8B94719F42A0800594D6B /* AppDelegate.swift */,
+				470DA9E419F456ED003EBC2A /* Globals.swift */,
+				470DA9E619F463D2003EBC2A /* TimerController.swift */,
+				470DA9E819F46AF2003EBC2A /* DownloadController.swift */,
+				47B8B94919F42A0800594D6B /* Images.xcassets */,
+				47B8B94B19F42A0800594D6B /* MainMenu.xib */,
+				47B8B94519F42A0800594D6B /* Supporting Files */,
+			);
+			path = Wallpiper;
+			sourceTree = "<group>";
+		};
+		47B8B94519F42A0800594D6B /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				47B8B94619F42A0800594D6B /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		47B8B95519F42A0800594D6B /* WallpiperTests */ = {
+			isa = PBXGroup;
+			children = (
+				47B8B95819F42A0800594D6B /* WallpiperTests.swift */,
+				47B8B95619F42A0800594D6B /* Supporting Files */,
+			);
+			path = WallpiperTests;
+			sourceTree = "<group>";
+		};
+		47B8B95619F42A0800594D6B /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				47B8B95719F42A0800594D6B /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		47B8B94119F42A0800594D6B /* Wallpiper */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 47B8B95C19F42A0800594D6B /* Build configuration list for PBXNativeTarget "Wallpiper" */;
+			buildPhases = (
+				47B8B93E19F42A0800594D6B /* Sources */,
+				47B8B93F19F42A0800594D6B /* Frameworks */,
+				47B8B94019F42A0800594D6B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Wallpiper;
+			productName = Wallpiper;
+			productReference = 47B8B94219F42A0800594D6B /* Wallpiper.app */;
+			productType = "com.apple.product-type.application";
+		};
+		47B8B95119F42A0800594D6B /* WallpiperTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 47B8B95F19F42A0800594D6B /* Build configuration list for PBXNativeTarget "WallpiperTests" */;
+			buildPhases = (
+				47B8B94E19F42A0800594D6B /* Sources */,
+				47B8B94F19F42A0800594D6B /* Frameworks */,
+				47B8B95019F42A0800594D6B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				47B8B95419F42A0800594D6B /* PBXTargetDependency */,
+			);
+			name = WallpiperTests;
+			productName = WallpiperTests;
+			productReference = 47B8B95219F42A0800594D6B /* WallpiperTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		47B8B93A19F42A0800594D6B /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0610;
+				ORGANIZATIONNAME = "Tassilo Selover-Stephan";
+				TargetAttributes = {
+					47B8B94119F42A0800594D6B = {
+						CreatedOnToolsVersion = 6.1;
+					};
+					47B8B95119F42A0800594D6B = {
+						CreatedOnToolsVersion = 6.1;
+						TestTargetID = 47B8B94119F42A0800594D6B;
+					};
+				};
+			};
+			buildConfigurationList = 47B8B93D19F42A0800594D6B /* Build configuration list for PBXProject "Wallpiper" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 47B8B93919F42A0800594D6B;
+			productRefGroup = 47B8B94319F42A0800594D6B /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				47B8B94119F42A0800594D6B /* Wallpiper */,
+				47B8B95119F42A0800594D6B /* WallpiperTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		47B8B94019F42A0800594D6B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				47B8B94A19F42A0800594D6B /* Images.xcassets in Resources */,
+				47B8B94D19F42A0800594D6B /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		47B8B95019F42A0800594D6B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		47B8B93E19F42A0800594D6B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				470DA9E519F456ED003EBC2A /* Globals.swift in Sources */,
+				47B8B94819F42A0800594D6B /* AppDelegate.swift in Sources */,
+				470DA9E719F463D2003EBC2A /* TimerController.swift in Sources */,
+				470DA9E919F46AF2003EBC2A /* DownloadController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		47B8B94E19F42A0800594D6B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				47B8B95919F42A0800594D6B /* WallpiperTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		47B8B95419F42A0800594D6B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 47B8B94119F42A0800594D6B /* Wallpiper */;
+			targetProxy = 47B8B95319F42A0800594D6B /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		47B8B94B19F42A0800594D6B /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				47B8B94C19F42A0800594D6B /* Base */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		47B8B95A19F42A0800594D6B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		47B8B95B19F42A0800594D6B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		47B8B95D19F42A0800594D6B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = Wallpiper/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		47B8B95E19F42A0800594D6B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = Wallpiper/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		47B8B96019F42A0800594D6B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = WallpiperTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Wallpiper.app/Contents/MacOS/Wallpiper";
+			};
+			name = Debug;
+		};
+		47B8B96119F42A0800594D6B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = WallpiperTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Wallpiper.app/Contents/MacOS/Wallpiper";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		47B8B93D19F42A0800594D6B /* Build configuration list for PBXProject "Wallpiper" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				47B8B95A19F42A0800594D6B /* Debug */,
+				47B8B95B19F42A0800594D6B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		47B8B95C19F42A0800594D6B /* Build configuration list for PBXNativeTarget "Wallpiper" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				47B8B95D19F42A0800594D6B /* Debug */,
+				47B8B95E19F42A0800594D6B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		47B8B95F19F42A0800594D6B /* Build configuration list for PBXNativeTarget "WallpiperTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				47B8B96019F42A0800594D6B /* Debug */,
+				47B8B96119F42A0800594D6B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 47B8B93A19F42A0800594D6B /* Project object */;
+}
