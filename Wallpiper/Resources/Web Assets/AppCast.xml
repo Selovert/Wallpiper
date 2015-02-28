@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" xmlns:dc="http://purl.org/dc/elements/1.1/">
+    <channel>
+        <title>Wallpiper Changelog</title>
+        <link>http://people.oregonstate.edu/~selovert/Wallpiper/changelog.html</link>
+        <description>Most recent changes with links to updates.</description>
+        <language>en</language>
+        <item>
+            <title>Version 0.7</title>
+            <sparkle:releaseNotesLink>
+              http://people.oregonstate.edu/~selovert/Wallpiper/changelog.html
+            </sparkle:releaseNotesLink>
+            <pubDate>Mon Sep 22 07:57:53</pubDate>
+            <enclosure url="http://people.oregonstate.edu/~selovert/Wallpiper/Binaries/Uploadur-0.7.zip" sparkle:version="0.7" type="application/octet-stream" sparkle:dsaSignature="MCwCFGxqBg2L+FJuprm0FV25/RCL456KAhQXCHbme0igvAOBuTtmPT4OBZQKHg==" />
+            <sparkle:minimumSystemVersion>10.10</sparkle:minimumSystemVersion>
+        </item>
+    </channel>
+</rss>

@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "47B8B94119F42A0800594D6B"
+               BlueprintIdentifier = "470D0F7619F8165800015DE2"
                BuildableName = "Wallpiper.app"
                BlueprintName = "Wallpiper"
                ReferencedContainer = "container:Wallpiper.xcodeproj">
@@ -28,7 +28,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "47B8B95119F42A0800594D6B"
+               BlueprintIdentifier = "470D0F8619F8165800015DE2"
                BuildableName = "WallpiperTests.xctest"
                BlueprintName = "WallpiperTests"
                ReferencedContainer = "container:Wallpiper.xcodeproj">
@@ -46,7 +46,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "47B8B95119F42A0800594D6B"
+               BlueprintIdentifier = "470D0F8619F8165800015DE2"
                BuildableName = "WallpiperTests.xctest"
                BlueprintName = "WallpiperTests"
                ReferencedContainer = "container:Wallpiper.xcodeproj">
@@ -56,7 +56,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "47B8B94119F42A0800594D6B"
+            BlueprintIdentifier = "470D0F7619F8165800015DE2"
             BuildableName = "Wallpiper.app"
             BlueprintName = "Wallpiper"
             ReferencedContainer = "container:Wallpiper.xcodeproj">
@@ -75,7 +75,7 @@
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "47B8B94119F42A0800594D6B"
+            BlueprintIdentifier = "470D0F7619F8165800015DE2"
             BuildableName = "Wallpiper.app"
             BlueprintName = "Wallpiper"
             ReferencedContainer = "container:Wallpiper.xcodeproj">
@@ -93,7 +93,7 @@
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "47B8B94119F42A0800594D6B"
+            BlueprintIdentifier = "470D0F7619F8165800015DE2"
             BuildableName = "Wallpiper.app"
             BlueprintName = "Wallpiper"
             ReferencedContainer = "container:Wallpiper.xcodeproj">

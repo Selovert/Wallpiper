@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6250" systemVersion="14A389" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6250" systemVersion="14B25" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6250"/>
     </dependencies>
@@ -13,11 +13,16 @@
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="Wallpiper" customModuleProvider="target">
             <connections>
+                <outlet property="aboutItem" destination="Qpf-BG-mwX" id="bjf-BI-PKw"/>
+                <outlet property="latestItem" destination="S9l-v3-dY0" id="Lhm-VS-4e2"/>
+                <outlet property="preferencesItem" destination="rBN-nX-AQs" id="zE2-S3-bHt"/>
+                <outlet property="skipItem" destination="HHL-LK-AS4" id="Ldm-Ih-OtU"/>
                 <outlet property="statusMenu" destination="aHa-jC-oik" id="p61-SU-G6F"/>
-                <outlet property="window" destination="QvC-M9-y7g" id="gIp-Ho-8D9"/>
+                <outlet property="toggleItem" destination="5gC-Oh-pGi" id="zty-zK-NzB"/>
             </connections>
         </customObject>
         <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
+        <customObject id="Jmv-ha-Cfw" userLabel="Sparkle" customClass="SUUpdater"/>
         <menu title="Main Menu" systemMenu="main" id="AYu-sK-qS6">
             <items>
                 <menuItem title="Wallpiper" id="1Xt-HY-uBw">
@@ -667,20 +672,26 @@
                 </menuItem>
             </items>
         </menu>
-        <window title="Wallpiper" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" animationBehavior="default" id="QvC-M9-y7g">
-            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
-            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="335" y="390" width="480" height="360"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
-            <view key="contentView" id="EiT-Mj-1SZ">
-                <rect key="frame" x="0.0" y="0.0" width="480" height="360"/>
-                <autoresizingMask key="autoresizingMask"/>
-            </view>
-        </window>
         <menu id="aHa-jC-oik" userLabel="StatusMenu">
             <items>
-                <menuItem title="About" id="Qpf-BG-mwX">
+                <menuItem title="Idle..." enabled="NO" id="S9l-v3-dY0">
                     <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="latestWallpaper:" target="Voe-Tx-rLC" id="JaW-06-OYn"/>
+                    </connections>
+                </menuItem>
+                <menuItem isSeparatorItem="YES" id="BWr-EP-vuh"/>
+                <menuItem title="About Wallpiper" id="Qpf-BG-mwX">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="showAboutWindow:" target="Voe-Tx-rLC" id="IPn-du-4fi"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Check for Updates" id="naU-Xe-dSo">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="checkForUpdates:" target="Jmv-ha-Cfw" id="rFe-v5-7hW"/>
+                    </connections>
                 </menuItem>
                 <menuItem title="Get New Wallpaper" id="HHL-LK-AS4">
                     <modifierMask key="keyEquivalentModifierMask"/>
@@ -688,16 +699,19 @@
                         <action selector="getNewWallpaper:" target="Voe-Tx-rLC" id="AVn-8E-sGR"/>
                     </connections>
                 </menuItem>
-                <menuItem title="Stop" id="VTj-lE-uPC">
+                <menuItem title="Start" id="5gC-Oh-pGi">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
-                        <action selector="stopTimer:" target="Voe-Tx-rLC" id="4Tv-YX-mfj"/>
+                        <action selector="toggleTimer:" target="Voe-Tx-rLC" id="jh8-Dn-CNU"/>
                     </connections>
                 </menuItem>
-                <menuItem title="Preferences" id="rBN-nX-AQs">
+                <menuItem title="Preferences..." id="rBN-nX-AQs">
                     <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="showSettingsWindow:" target="Voe-Tx-rLC" id="l0L-NI-19X"/>
+                    </connections>
                 </menuItem>
-                <menuItem title="Quit" id="d9B-dX-zeg">
+                <menuItem title="Quit Wallpiper" id="d9B-dX-zeg">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="terminate:" target="-2" id="Yii-d3-GTH"/>

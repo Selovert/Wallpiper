@@ -44,3 +44,6 @@ coverage.xml
 docs/_build/
 
 production/
+Wallpiper/Resources/AppKeys.plist
+
+Wallpiper/Resources/sign_update.sh
