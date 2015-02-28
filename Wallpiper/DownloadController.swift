@@ -45,8 +45,8 @@ class DownloadController: NSObject {
         for (i, screen) in enumerate(globals.screens) {
             let x: Int = globals.screenOverrides[i][0]
             let y: Int = globals.screenOverrides[i][1]
-            let request = NSMutableURLRequest(URL: NSURL(string: "https://interfacelift-interfacelift-wallpapers.p.mashape.com/v1/wallpapers/?limit=1&resolution=\(x)x\(y)&sort_by=random")!)
-            request.addValue("WOHjrTgcS7mshaocg3WN1kKhSGn1p1Hpk0UjsncivjfU3T6632", forHTTPHeaderField: "X-Mashape-Key")
+            let request = NSMutableURLRequest(URL: NSURL(string: "https://api.ifl.cc/v1/wallpapers/?limit=1&resolution=\(x)x\(y)&sort_by=random")!)
+            request.addValue(globals.appKey, forHTTPHeaderField: "X-IFL-API-Key")
             NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue()) {(response, data, error) in
                 if !(error? != nil) {
                     let httpResponse = response as NSHTTPURLResponse
@@ -68,25 +68,15 @@ class DownloadController: NSObject {
         let x: Int = globals.screenOverrides[i][0]
         let y: Int = globals.screenOverrides[i][1]
         let id = item["id"]
-        let request = NSMutableURLRequest(URL: NSURL(string: "https://interfacelift-interfacelift-wallpapers.p.mashape.com/v1/wallpaper_download/\(id)/\(x)x\(y)/")!)
-        request.addValue("WOHjrTgcS7mshaocg3WN1kKhSGn1p1Hpk0UjsncivjfU3T6632", forHTTPHeaderField: "X-Mashape-Key")
+        let request = NSMutableURLRequest(URL: NSURL(string: "https://api.ifl.cc/v1/wallpaper_download/\(id)/\(x)x\(y)/")!)
+        request.addValue(globals.appKey, forHTTPHeaderField: "X-IFL-API-Key")
         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue()) {(response, data, error) in
             if !(error? != nil) {
-                let httpResponse = response as NSHTTPURLResponse
-                let headers: NSDictionary = httpResponse.allHeaderFields
-                let remainingString: String = headers["X-RateLimit-wallpaper-downloads-Remaining"]! as String
-                let remaining: Int = remainingString.toInt()!
-                println("\(remaining) downloads remaining month.")
-                if (remaining > 10) {
-                    let json = JSON(data: data)
-                    let downloadURL = json["download_url"]
-                    let screen = self.globals.screens[i]
-                    var datastring = NSString(data: data, encoding: NSUTF8StringEncoding)
-                    self.fetchImage("\(downloadURL)", screen: screen)
-                } else {
-                    self.notificationController.notify("Wallpiper:", message: "No downloads remaining this month", link: nil)
-                    self.globals.appDelegate!.setDownloadState(false)
-                }
+                let json = JSON(data: data)
+                let downloadURL = json["download_url"]
+                let screen = self.globals.screens[i]
+                var datastring = NSString(data: data, encoding: NSUTF8StringEncoding)
+                self.fetchImage("\(downloadURL)", screen: screen)
             } else {
                 self.notificationController.notify("Wallpiper:", message: "Getting download link failed", link: nil)
                 self.globals.appDelegate!.setDownloadState(false)
@@ -130,7 +120,7 @@ class DownloadController: NSObject {
         self.downloadProgress = (Float(self.data!.length) / Float(self.downloadSize)) * 100
         let progress: Int = Int(self.downloadProgress)
         if (progress != 100) {
-            self.globals.appDelegate!.changeIcon("menubar-icon-dl-\((progress / 10) * 10)", setToDefault: false)
+            self.globals.appDelegate!.changeIcon("menubar-icon-dl-\(((progress / 10) * 10) + 10)", setToDefault: false)
         }
     }
     

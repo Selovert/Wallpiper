@@ -6,12 +6,12 @@
         <description>Most recent changes with links to updates.</description>
         <language>en</language>
         <item>
-            <title>Version 0.7</title>
+            <title>Version 0.7.1</title>
             <sparkle:releaseNotesLink>
               http://people.oregonstate.edu/~selovert/Wallpiper/changelog.html
             </sparkle:releaseNotesLink>
-            <pubDate>Mon Sep 22 07:57:53</pubDate>
-            <enclosure url="http://people.oregonstate.edu/~selovert/Wallpiper/Binaries/Uploadur-0.7.zip" sparkle:version="0.7" type="application/octet-stream" sparkle:dsaSignature="MCwCFGxqBg2L+FJuprm0FV25/RCL456KAhQXCHbme0igvAOBuTtmPT4OBZQKHg==" />
+            <pubDate>Sat Feb 28 17:57:53</pubDate>
+            <enclosure url="http://people.oregonstate.edu/~selovert/Wallpiper/Binaries/Wallpiper-0.7.1.zip" sparkle:version="0.7.1" type="application/octet-stream" sparkle:dsaSignature="MC0CFQCILEcLQGqkkEwmvgmHdeN4AEHocAIUDbJdflxiu7bR46gVfG6RLjO7Lgo=" />
             <sparkle:minimumSystemVersion>10.10</sparkle:minimumSystemVersion>
         </item>
     </channel>

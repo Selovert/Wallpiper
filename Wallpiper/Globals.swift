@@ -44,7 +44,7 @@ class Globals: NSObject {
         defaultImage = "menubar-icon"
         currentImage = ""
         var keyDict:NSDictionary = NSDictionary(contentsOfFile: NSBundle.mainBundle().pathForResource("AppKeys", ofType: "plist")!)!
-        appKey = keyDict.objectForKey("X-Mashape-Key") as String
+        appKey = keyDict.objectForKey("X-IFL-API-Key") as String
         for screen in screens {
             screenOverrides.append([Int(screen.frame.width * screen.backingScaleFactor),Int(screen.frame.height * screen.backingScaleFactor)])
         }
