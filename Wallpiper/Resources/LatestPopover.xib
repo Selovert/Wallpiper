@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6751" systemVersion="14C1514" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6751"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="LatestPopoverController" customModule="Wallpiper" customModuleProvider="target">
+            <connections>
+                <outlet property="browserButton" destination="iPM-yv-F1W" id="avB-kc-0Ov"/>
+                <outlet property="finderButton" destination="iiz-bq-hWZ" id="VeT-qi-AVi"/>
+                <outlet property="imageView" destination="JB7-vb-Ufy" id="h9I-7T-uSH"/>
+                <outlet property="view" destination="pww-UO-ngv" id="O16-Ew-HOK"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView wantsLayer="YES" id="pww-UO-ngv" userLabel="Last Image View">
+            <rect key="frame" x="0.0" y="0.0" width="175" height="35"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" id="JB7-vb-Ufy">
+                    <rect key="frame" x="0.0" y="0.0" width="175" height="35"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="jOu-X2-LRy"/>
+                </imageView>
+                <button focusRingType="none" verticalHuggingPriority="750" id="iiz-bq-hWZ">
+                    <rect key="frame" x="3" y="1" width="28" height="28"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <buttonCell key="cell" type="squareTextured" bezelStyle="texturedSquare" imagePosition="overlaps" alignment="center" state="on" borderStyle="border" focusRingType="none" imageScaling="proportionallyDown" inset="2" id="Cn5-ED-Mnh">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="finderButton:" target="-2" id="WqT-3J-SGK"/>
+                    </connections>
+                </button>
+                <button focusRingType="none" verticalHuggingPriority="750" id="iPM-yv-F1W">
+                    <rect key="frame" x="144" y="1" width="28" height="28"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                    <buttonCell key="cell" type="squareTextured" bezelStyle="texturedSquare" imagePosition="overlaps" alignment="center" state="on" borderStyle="border" focusRingType="none" imageScaling="proportionallyDown" inset="2" id="CGu-Bk-VvT">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="browserButton:" target="-2" id="Hz4-ks-RJG"/>
+                    </connections>
+                </button>
+            </subviews>
+            <point key="canvasLocation" x="455.5" y="414.5"/>
+        </customView>
+    </objects>
+</document>

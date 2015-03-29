@@ -2,8 +2,8 @@
 //  WallpiperTests.swift
 //  WallpiperTests
 //
-//  Created by Tassilo Selover-Stephan on 10/22/14.
-//  Copyright (c) 2014 Tassilo Selover-Stephan. All rights reserved.
+//  Created by Tassilo Selover-Stephan on 24/03/15.
+//  Copyright (c) 2015 Tassilo Selover-Stephan. All rights reserved.
 //
 
 import Cocoa

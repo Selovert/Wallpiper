@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0610"
+   LastUpgradeVersion = "0620"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "470D0F7619F8165800015DE2"
+               BlueprintIdentifier = "47CF53311AC1F54E0025577C"
                BuildableName = "Wallpiper.app"
                BlueprintName = "Wallpiper"
                ReferencedContainer = "container:Wallpiper.xcodeproj">
@@ -28,7 +28,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "470D0F8619F8165800015DE2"
+               BlueprintIdentifier = "47CF53411AC1F54E0025577C"
                BuildableName = "WallpiperTests.xctest"
                BlueprintName = "WallpiperTests"
                ReferencedContainer = "container:Wallpiper.xcodeproj">
@@ -46,7 +46,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "470D0F8619F8165800015DE2"
+               BlueprintIdentifier = "47CF53411AC1F54E0025577C"
                BuildableName = "WallpiperTests.xctest"
                BlueprintName = "WallpiperTests"
                ReferencedContainer = "container:Wallpiper.xcodeproj">
@@ -56,7 +56,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "470D0F7619F8165800015DE2"
+            BlueprintIdentifier = "47CF53311AC1F54E0025577C"
             BuildableName = "Wallpiper.app"
             BlueprintName = "Wallpiper"
             ReferencedContainer = "container:Wallpiper.xcodeproj">
@@ -72,10 +72,11 @@
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       allowLocationSimulation = "YES">
-      <BuildableProductRunnable>
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "470D0F7619F8165800015DE2"
+            BlueprintIdentifier = "47CF53311AC1F54E0025577C"
             BuildableName = "Wallpiper.app"
             BlueprintName = "Wallpiper"
             ReferencedContainer = "container:Wallpiper.xcodeproj">
@@ -90,10 +91,11 @@
       useCustomWorkingDirectory = "NO"
       buildConfiguration = "Release"
       debugDocumentVersioning = "YES">
-      <BuildableProductRunnable>
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "470D0F7619F8165800015DE2"
+            BlueprintIdentifier = "47CF53311AC1F54E0025577C"
             BuildableName = "Wallpiper.app"
             BlueprintName = "Wallpiper"
             ReferencedContainer = "container:Wallpiper.xcodeproj">
