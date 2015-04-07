@@ -1,0 +1,83 @@
+---
+---
+
+//
+// IMPORTS
+//
+
+@import "slick";
+
+// Syntax highlighting @import is at the bottom of this file
+
+/**************/
+/* BASE RULES */
+/**************/
+
+#wrap {
+  background: #fffefc;
+}
+
+#footer {
+  width: 100%;
+  text-align: center;
+  border-top: 1px solid #dedede;
+  padding: 5px;
+  .copywrite {
+    clear: both;
+  }
+}
+
+.centered-container {
+  width: 100%;
+  clear: both;
+  text-align: center;
+}
+
+.button-container a {
+  margin: 5px;
+}
+
+@media only screen and (min-width: 40.063em) {
+  .button-container .download {
+    margin-right: 30px;
+  }
+}
+
+#uploadur-logo {
+  width: 256px;
+  height: 192px;
+}
+
+hr {
+  margin: 8px 0 7px 0;
+}
+
+#screenshots {
+  li {
+  float: none;
+  display: inline-block;
+  margin: 5px;
+  }
+  img {
+    height: 87px;
+    width: 140px;
+    opacity: 1;
+    transition: opacity 0.25s linear;
+    &:hover {
+      opacity: 0.9;
+    }
+  }
+}
+
+img.inline-icon {
+  height: 16px;
+  width: 21px;
+}
+
+.settings-slider {
+  max-width: 500px;
+  margin-left: auto;
+  margin-right:auto;
+}
+// Settled on moving the import of syntax highlighting to the bottom of the CSS
+// ... Otherwise it really bloats up the top of the CSS file and makes it difficult to find the start
