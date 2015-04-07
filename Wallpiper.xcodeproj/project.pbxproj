@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4725FB421AD3245600C7BCEC /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4725FB401AD3243E00C7BCEC /* Sparkle.framework */; };
+		4725FB431AD3245600C7BCEC /* Sparkle.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4725FB401AD3243E00C7BCEC /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4725FB451AD328B700C7BCEC /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 4725FB441AD328B700C7BCEC /* dsa_pub.pem */; };
 		47493F081AC446FF0054A819 /* LatestPopoverController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47493F071AC446FF0054A819 /* LatestPopoverController.swift */; };
 		47493F0A1AC447200054A819 /* LatestPopover.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47493F091AC447200054A819 /* LatestPopover.xib */; };
 		479B6F691AC437400061AA4F /* AboutWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 479B6F671AC437400061AA4F /* AboutWindowController.swift */; };
@@ -35,7 +38,23 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		4725FB3D1AD321EA00C7BCEC /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				4725FB431AD3245600C7BCEC /* Sparkle.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		4725FB401AD3243E00C7BCEC /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = Wallpiper/Frameworks/Sparkle.framework; sourceTree = "<group>"; };
+		4725FB441AD328B700C7BCEC /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = dsa_pub.pem; path = Resources/dsa_pub.pem; sourceTree = "<group>"; };
 		47493F071AC446FF0054A819 /* LatestPopoverController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LatestPopoverController.swift; path = Classes/LatestPopoverController.swift; sourceTree = "<group>"; };
 		47493F091AC447200054A819 /* LatestPopover.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LatestPopover.xib; path = Resources/LatestPopover.xib; sourceTree = "<group>"; };
 		479B6F671AC437400061AA4F /* AboutWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AboutWindowController.swift; path = Classes/AboutWindowController.swift; sourceTree = "<group>"; };
@@ -63,6 +82,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4725FB421AD3245600C7BCEC /* Sparkle.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -79,6 +99,7 @@
 		472443AA1AC2CB3B00EA7A70 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				4725FB441AD328B700C7BCEC /* dsa_pub.pem */,
 				47CF535E1AC201620025577C /* AppKeys.plist */,
 				47CF53361AC1F54E0025577C /* Info.plist */,
 				479B6F681AC437400061AA4F /* AboutWindow.xib */,
@@ -106,6 +127,15 @@
 			name = Classes;
 			sourceTree = "<group>";
 		};
+		4725FB351AD3203D00C7BCEC /* Dependencies */ = {
+			isa = PBXGroup;
+			children = (
+				4725FB401AD3243E00C7BCEC /* Sparkle.framework */,
+			);
+			name = Dependencies;
+			path = ..;
+			sourceTree = "<group>";
+		};
 		47CF53291AC1F54E0025577C = {
 			isa = PBXGroup;
 			children = (
@@ -127,6 +157,7 @@
 		47CF53341AC1F54E0025577C /* Wallpiper */ = {
 			isa = PBXGroup;
 			children = (
+				4725FB351AD3203D00C7BCEC /* Dependencies */,
 				472443AB1AC2CB7A00EA7A70 /* Classes */,
 				472443AA1AC2CB3B00EA7A70 /* Resources */,
 			);
@@ -160,6 +191,7 @@
 				47CF532E1AC1F54E0025577C /* Sources */,
 				47CF532F1AC1F54E0025577C /* Frameworks */,
 				47CF53301AC1F54E0025577C /* Resources */,
+				4725FB3D1AD321EA00C7BCEC /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -230,6 +262,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4725FB451AD328B700C7BCEC /* dsa_pub.pem in Resources */,
 				47CF535F1AC201620025577C /* AppKeys.plist in Resources */,
 				47CF53631AC2BD760025577C /* StatusItem.xib in Resources */,
 				479B6F6A1AC437400061AA4F /* AboutWindow.xib in Resources */,
@@ -377,6 +410,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/Wallpiper/Frameworks",
+				);
 				INFOPLIST_FILE = Wallpiper/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -388,6 +426,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/Wallpiper/Frameworks",
+				);
 				INFOPLIST_FILE = Wallpiper/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
