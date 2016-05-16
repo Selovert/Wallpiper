@@ -30,7 +30,7 @@ class NotificationController: NSObject, NSUserNotificationCenterDelegate {
         var notification: NSUserNotification = NSUserNotification()
         notification.title = title
         notification.informativeText = message
-        notification.userInfo = userInfo
+        notification.userInfo = userInfo as [NSObject : AnyObject]
         notificationCenter.deliverNotification(notification)
     }
     

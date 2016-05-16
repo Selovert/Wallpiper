@@ -15,7 +15,7 @@ class LatestPopoverController: NSViewController {
     @IBOutlet var browserButton: NSButton!
     
     
-    let delegate: AppDelegate = NSApplication.sharedApplication().delegate as AppDelegate
+    let delegate: AppDelegate = NSApplication.sharedApplication().delegate as! AppDelegate
     var popover: NSPopover = NSPopover()
     var contentSize: NSSize = NSSize()
     var image: NSImage?

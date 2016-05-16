@@ -18,7 +18,7 @@ class StatusItemDelegate: NSObject, NSMenuDelegate {
     @IBOutlet var savePathItem: NSMenuItem!
     @IBOutlet var deleteLastImageItem: NSMenuItem!
     
-    let delegate: AppDelegate = NSApplication.sharedApplication().delegate as AppDelegate
+    let delegate: AppDelegate = NSApplication.sharedApplication().delegate as! AppDelegate
     var startupController: StartupController = StartupController()
     var statusItem: NSStatusItem
     var button: NSStatusBarButton

@@ -19,13 +19,13 @@ class Globals: NSObject {
 
     override init() {
         var keyDict:NSDictionary = NSDictionary(contentsOfFile: NSBundle.mainBundle().pathForResource("AppKeys", ofType: "plist")!)!
-        appKey = keyDict.objectForKey("X-IFL-API-Key") as String
+        appKey = keyDict.objectForKey("X-IFL-API-Key") as! String
         
         let defaultValues = [
             "deleteOldImages" : 1,
             "savePath"        : "\(NSHomeDirectory())/Pictures/Wallpapers"
         ]
-        defaults.registerDefaults(defaultValues)
+        defaults.registerDefaults(defaultValues as [NSObject : AnyObject])
         super.init()
         self.loadSettings()
     }

@@ -14,6 +14,7 @@
 		47493F0A1AC447200054A819 /* LatestPopover.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47493F091AC447200054A819 /* LatestPopover.xib */; };
 		479B6F691AC437400061AA4F /* AboutWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 479B6F671AC437400061AA4F /* AboutWindowController.swift */; };
 		479B6F6A1AC437400061AA4F /* AboutWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 479B6F681AC437400061AA4F /* AboutWindow.xib */; };
+		47B732411AF6968E00EAA3F6 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B732401AF6968E00EAA3F6 /* SwiftyJSON.swift */; };
 		47CF53381AC1F54E0025577C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CF53371AC1F54E0025577C /* AppDelegate.swift */; };
 		47CF533D1AC1F54E0025577C /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47CF533B1AC1F54E0025577C /* MainMenu.xib */; };
 		47CF53491AC1F54E0025577C /* WallpiperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CF53481AC1F54E0025577C /* WallpiperTests.swift */; };
@@ -23,7 +24,6 @@
 		47CF53591AC1FB040025577C /* StartupController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CF53581AC1FB040025577C /* StartupController.swift */; };
 		47CF535D1AC1FCCF0025577C /* DownloadController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CF535C1AC1FCCF0025577C /* DownloadController.swift */; };
 		47CF535F1AC201620025577C /* AppKeys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 47CF535E1AC201620025577C /* AppKeys.plist */; };
-		47CF53611AC201F50025577C /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CF53601AC201F50025577C /* SwiftyJSON.swift */; };
 		47CF53631AC2BD760025577C /* StatusItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47CF53621AC2BD760025577C /* StatusItem.xib */; };
 		47FDC7AA1AC5E01B00A5E785 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 47FDC7A91AC5E01B00A5E785 /* Images.xcassets */; };
 /* End PBXBuildFile section */
@@ -59,6 +59,7 @@
 		47493F091AC447200054A819 /* LatestPopover.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LatestPopover.xib; path = Resources/LatestPopover.xib; sourceTree = "<group>"; };
 		479B6F671AC437400061AA4F /* AboutWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AboutWindowController.swift; path = Classes/AboutWindowController.swift; sourceTree = "<group>"; };
 		479B6F681AC437400061AA4F /* AboutWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AboutWindow.xib; path = Resources/AboutWindow.xib; sourceTree = "<group>"; };
+		47B732401AF6968E00EAA3F6 /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
 		47CF53321AC1F54E0025577C /* Wallpiper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Wallpiper.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		47CF53361AC1F54E0025577C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		47CF53371AC1F54E0025577C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = Classes/AppDelegate.swift; sourceTree = "<group>"; };
@@ -72,7 +73,6 @@
 		47CF53581AC1FB040025577C /* StartupController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StartupController.swift; path = Classes/StartupController.swift; sourceTree = "<group>"; };
 		47CF535C1AC1FCCF0025577C /* DownloadController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DownloadController.swift; path = Classes/DownloadController.swift; sourceTree = "<group>"; };
 		47CF535E1AC201620025577C /* AppKeys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = AppKeys.plist; path = Resources/AppKeys.plist; sourceTree = "<group>"; };
-		47CF53601AC201F50025577C /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SwiftyJSON.swift; path = Classes/SwiftyJSON.swift; sourceTree = "<group>"; };
 		47CF53621AC2BD760025577C /* StatusItem.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = StatusItem.xib; path = Resources/StatusItem.xib; sourceTree = "<group>"; };
 		47FDC7A91AC5E01B00A5E785 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Resources/Images.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -122,7 +122,7 @@
 				47CF53561AC1FAE60025577C /* NotificationController.swift */,
 				47CF53581AC1FB040025577C /* StartupController.swift */,
 				47CF53521AC1F6050025577C /* StatusItemDelegate.swift */,
-				47CF53601AC201F50025577C /* SwiftyJSON.swift */,
+				47B732401AF6968E00EAA3F6 /* SwiftyJSON.swift */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -292,8 +292,8 @@
 				47CF535D1AC1FCCF0025577C /* DownloadController.swift in Sources */,
 				47CF53571AC1FAE60025577C /* NotificationController.swift in Sources */,
 				47493F081AC446FF0054A819 /* LatestPopoverController.swift in Sources */,
+				47B732411AF6968E00EAA3F6 /* SwiftyJSON.swift in Sources */,
 				479B6F691AC437400061AA4F /* AboutWindowController.swift in Sources */,
-				47CF53611AC201F50025577C /* SwiftyJSON.swift in Sources */,
 				47CF53551AC1F9060025577C /* Globals.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

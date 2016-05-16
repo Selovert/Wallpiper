@@ -13,7 +13,7 @@ class AboutWindowController: NSWindowController, NSWindowDelegate {
     @IBOutlet var aboutWindow: NSWindow!
     @IBOutlet weak var versionLabel: NSTextField!
     
-    let version: String = NSBundle.mainBundle().objectForInfoDictionaryKey("CFBundleShortVersionString")! as String
+    let version: String = NSBundle.mainBundle().objectForInfoDictionaryKey("CFBundleShortVersionString")! as! String
     
     override func windowDidLoad() {
         

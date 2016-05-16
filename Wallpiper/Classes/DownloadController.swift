@@ -9,7 +9,7 @@
 import Cocoa
 
 class DownloadController: NSObject {
-    let delegate: AppDelegate = NSApplication.sharedApplication().delegate as AppDelegate
+    let delegate: AppDelegate = NSApplication.sharedApplication().delegate as! AppDelegate
     var error: NSError?
     var fileManager: NSFileManager = NSFileManager.defaultManager()
     
@@ -38,8 +38,8 @@ class DownloadController: NSObject {
         let request = NSMutableURLRequest(URL: NSURL(string: "https://api.ifl.cc/v1/wallpapers/?limit=1&resolution=\(x)x\(y)&sort_by=random")!)
         request.addValue(delegate.globals.appKey, forHTTPHeaderField: "X-IFL-API-Key")
         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue()) {(response, data, error) in
-            if !(error? != nil) {
-                let httpResponse = response as NSHTTPURLResponse
+            if !(error != nil) {
+                let httpResponse = response as! NSHTTPURLResponse
                 let json = JSON(data: data)
                 let title = json[0]["title"]
                 let detailURL = json[0]["url_ifl"]
@@ -58,7 +58,7 @@ class DownloadController: NSObject {
         let request = NSMutableURLRequest(URL: NSURL(string: "https://api.ifl.cc/v1/wallpaper_download/\(id)/\(x)x\(y)/")!)
         request.addValue(delegate.globals.appKey, forHTTPHeaderField: "X-IFL-API-Key")
         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue()) {(response, data, error) in
-            if !(error? != nil) {
+            if !(error != nil) {
                 let json = JSON(data: data)
                 let downloadURL = json["download_url"]
                 let screen = self.mainScreen
@@ -113,7 +113,7 @@ class DownloadController: NSObject {
             latestImagePath = image
             let workSpace: NSWorkspace = NSWorkspace.sharedWorkspace()
             let currentOptions: NSDictionary = workSpace.desktopImageOptionsForScreen(mainScreen)!
-            workSpace.setDesktopImageURL(imagePath, forScreen: mainScreen, options: currentOptions, error: nil)
+            workSpace.setDesktopImageURL(imagePath, forScreen: mainScreen, options: currentOptions as [NSObject : AnyObject], error: nil)
             delegate.statusItemDelegate.changeIcon(delegate.statusItemDelegate.defaultImage, setToDefault: false)
             delegate.statusItemDelegate.setDownloadState(false)
             delegate.notificationController.notify("Wallpiper: new wallpaper", message: self.latestTitle, link: self.latestDetailURL)
